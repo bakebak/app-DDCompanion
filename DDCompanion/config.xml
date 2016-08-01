@@ -97,4 +97,7 @@
   </platform>
   <engine name="android" spec="~5.2.1" />
   <plugin name="cordova-plugin-app-preferences" version="0.99.2" />
+  <plugin name="cordova-plugin-googleplus" spec="https://github.com/EddyVerbruggen/cordova-plugin-googleplus">
+    <variable name="REVERSED_CLIENT_ID" value="myreversedclientid" />
+  </plugin>
 </widget>

@@ -1,0 +1,44 @@
+{
+  "project_info": {
+    "project_number": "525194914570",
+    "project_id": "dd-companion"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:525194914570:android:e3f17dfba9801476",
+        "android_client_info": {
+          "package_name": "io.cordova.myappa75dc6"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "525194914570-nt3maf8uaueopbsg6hdsol6ntup6gvid.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.cordova.myappa75dc6",
+            "certificate_hash": "2291C2EE3AA6272BDFD4FC6C1968223581CFA55D"
+          }
+        },
+        {
+          "client_id": "525194914570-3ebj3t87o3cflvi8rq4qnve5s4b3k8rf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
