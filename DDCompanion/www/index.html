@@ -9,78 +9,35 @@
         <title>DDCompanion</title>
     </head>
     <body>
-        <div class="app">
-            <div data-role="page">
-                <div data-role="header">
-                    <h1>DDCompanion</h1>
-                </div>
-                <div id="deviceready" class="blink">
-                    <p class="event listening">Connecting to Device</p>
-                    <p class="event received">Device is Ready</p>
-
-                    <div id="deviceready" class="blink">
-                        <p id="feedback">not logged in</p>
-                        <button onclick="isAvailable()">Available?</button>
-                        <br /><br />
-                        <button onclick="login()">Login with Google+</button>
-                        <br /><br />
-                        <button onclick="logout()">Logout</button>
-                        <button onclick="disconnect()">Disconnect</button>
-                    </div>
-                        <!--><form>
-                    <input data-bind="value: usuario" />
-                    <input data-bind="value: password" />
-                    <button data-bind="click: login, visible: showLogar () === false">Logar</button>
-                    <button data-bind="click: deslogar, visible: showDeslogar () === false">Deslogar</button>
-                    <button data-bind="click: limparCampos, visible: showLimpar () === false">Limpar Campos</button>
-                    <button data-bind="click: entrar, visible: showEntrar () === false">Entrar na empresa</button>
-                    </form>-->
-                </div>
-             </div>
+        <div data-role="page">
+            <div data-role="header">
+                <h1>AppDoor</h1>
             </div>
-            <script type="text/javascript" src="cordova.js"></script>
-            <script type="text/javascript" src="scripts/platformOverrides.js"></script>
-            <script type="text/javascript" src="scripts/jquery.mobile-1.4.5.min.js"></script>
-            <script type="text/javascript" src="scripts/jquery-1.9.1.min.js"></script>
-            <!--<script src="../plugins/cordova-plugin-app-preferences/www/apppreferences.js"></script>-->
-            <script src="../plugins/cordova-plugin-googleplus/www/GooglePlus.js"></script>
-            <script type="text/javascript" src="scripts/knockout-3.4.0.js"></script>
-            <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
-            <script type="text/javascript" src="scripts/index.js"></script>
-            <!--<script type="text/javascript" src="scripts/script.js"></script>-->
-            <script>
-                //var viewModel = new ViewModel();
-                //ko.applyBindings(viewModel);
-                app.initialize();
-                function isAvailable() {
-                    console.log("availb");
-                    window.plugins.googleplus.isAvailable(function (avail) { alert(avail) });
-                }
-                function login() {
-                    console.log("login");
-                    window.plugins.googleplus.login(
-                        {},
-                        function (obj) {
-                            document.querySelector("#image").src = obj.imageUrl;
-                            document.querySelector("#image").style.visibility = 'visible';
-                            document.querySelector("#feedback").innerHTML = "Hi, " + obj.displayName + ", " + obj.email;
-                        },
-                        function (msg) {
-                            document.querySelector("#feedback").innerHTML = "error: " + msg;
-                        }
-                    );
-                }
+        </div>
 
-                function logout() {
-                    console.log("logout");
-                    window.plugins.googleplus.logout(
-                    );
-                }
-                function disconnect() {
-                    console.log("Desconectado");
-                    window.plugins.googleplus.disconnect(
-                    );
-                }
-            </script>
-    </body>
+        <div data-role="page">
+            <form>
+                <div id="deviceready" class="blink">
+                    <p id="feedback">not logged in</p>
+                    <button data-bind="click: isAvailable">Funcionando?</button>
+                    <button data-bind="click: login">Login</button>
+                    <button data-bind="click: logout">Deslogar</button>
+                    <button data-bind="click: disconnect">Desconectar</button>
+                </div>
+            </form>
+        </div>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="scripts/platformOverrides.js"></script>
+    <script type="text/javascript" src="scripts/jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/javascript" src="scripts/jquery-1.9.1.min.js"></script>
+    <script src="../plugins/cordova-plugin-googleplus/www/GooglePlus.js"></script>
+    <script type="text/javascript" src="scripts/knockout-3.4.0.js"></script>
+    <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="scripts/index.js"></script>
+    <script type="text/javascript" src="scripts/script.js"></script>
+    <script>
+                var viewModel = new ViewModel();
+                ko.applyBindings(viewModel);
+    </script>
+</body>
 </html>
