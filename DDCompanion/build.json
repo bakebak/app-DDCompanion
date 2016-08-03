@@ -1,10 +1,10 @@
 {
      "android": {
          "release": {
-             "keystore": "",
-             "storePassword": "",
-             "alias": "",
-             "password" : "",
+             "keystore": "D://Novo_app/app-DDCompanion/DDCompanion/platforms/android/DDCompanion.keystore",
+             "storePassword": "DD159458",
+             "alias": "DDCompanionApp ",
+             "password" : "DD159458",
              "keystoreType": ""
          }
      }
