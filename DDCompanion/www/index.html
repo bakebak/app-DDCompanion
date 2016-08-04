@@ -5,39 +5,42 @@
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
         <link rel="stylesheet" type="text/css" href="css/index.css">
-        <link rel="stylesheet" type="text/css" href="scripts/jquery.mobile-1.4.5.min.js" />
-        <title>DDCompanion</title>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css" />
+
+        <title>DD Companion</title>
     </head>
-    <body>
-        <div data-role="page">
+    <body class="fundo">
+        <div class="fundo" data-role="page">
             <div data-role="header">
-                <h1>AppDoor</h1>
+                <h1>DD Companion</h1>
             </div>
+
+            <div data-role="main" class="ui-content">
+                <div class="user">
+                    <img id="user-photo" src="css/img/user-anonimo.jpg" />
+                    <!--<h1>Olá, <span id="user-name">visitante</span>!</h1>-->
+                    <h1>Olá, <span data-bind="text: userName"></span>!</h1>
+                </div>
+                <div class="caixa">
+                   <button class="botao ui-btn btn btn-primary btn-lg" data-bind="click: login, visible: showLogar () === true">Login</button>
+                   <br />
+                   <button  class="botao ui-btn btn btn-primary btn-lg" data-bind="click: disconnect, visible: showDeslogar () === true">Desconectar</button>
+                </div>
+             </div>
         </div>
 
-        <div data-role="page">
-            <form>
-                <div id="deviceready" class="blink">
-                    <p id="feedback">not logged in</p>
-                    <button data-bind="click: isAvailable">Funcionando?</button>
-                    <button data-bind="click: login">Login</button>
-                    <button data-bind="click: logout">Deslogar</button>
-                    <button data-bind="click: disconnect">Desconectar</button>
-                </div>
-            </form>
-        </div>
-    <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="scripts/platformOverrides.js"></script>
-    <script type="text/javascript" src="scripts/jquery.mobile-1.4.5.min.js"></script>
-    <script type="text/javascript" src="scripts/jquery-1.9.1.min.js"></script>
-    <script src="../plugins/cordova-plugin-googleplus/www/GooglePlus.js"></script>
-    <script type="text/javascript" src="scripts/knockout-3.4.0.js"></script>
-    <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
-    <script type="text/javascript" src="scripts/index.js"></script>
-    <script type="text/javascript" src="scripts/script.js"></script>
-    <script>
+            <script type="text/javascript" src="cordova.js"></script>
+            <script type="text/javascript" src="scripts/platformOverrides.js"></script>
+            <script type="text/javascript" src="scripts/jquery-1.9.1.min.js"></script>
+            <script src="../plugins/cordova-plugin-googleplus/www/GooglePlus.js"></script>
+            <script type="text/javascript" src="scripts/knockout-3.4.0.js"></script>
+            <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
+            <script type="text/javascript" src="scripts/index.js"></script>
+            <script type="text/javascript" src="scripts/script.js"></script>
+            <script>
                 var viewModel = new ViewModel();
                 ko.applyBindings(viewModel);
-    </script>
+            </script>
 </body>
 </html>
