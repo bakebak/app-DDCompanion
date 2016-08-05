@@ -1,0 +1,22 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-app-preferences": {
+            "PACKAGE_NAME": "br.com.digitaldesk.DDCompanion"
+        },
+        "cordova-plugin-googleplus": {
+            "REVERSED_CLIENT_ID": "com.googleusercontent.apps.489399558653-4kt78r4a61krt46ibn79f26f8q516lu7",
+            "PACKAGE_NAME": "br.com.digitaldesk.DDCompanion"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "br.com.digitaldesk.DDCompanion"
+        }
+    },
+    "dependent_plugins": {}
+}
