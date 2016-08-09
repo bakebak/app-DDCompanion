@@ -11,38 +11,50 @@
         <title>DD Companion</title>
     </head>
     <body class="fundo">
-        <div class="fundo" data-role="page">
-            <div data-role="header">
-                <h1>DD Companion</h1>
+        <div data-bind="if: pagina() == 'login'" data-role="main" class="ui-content">
+            <div class="caixa">
+                <button class="botao ui-btn btn btn-primary btn-lg" data-bind="click: login">Login</button>
+                <!--<button class="botao ui-btn btn btn-primary btn-lg" data-bind="click: desconectar">Desconectar</button>
+                <button class="botao ui-btn btn btn-primary btn-lg" data-bind="click: descon">Desc</button>-->
             </div>
-
-            <div data-role="main" class="ui-content">
-                <div class="user">
-                    <img id="user-photo" src="css/img/user-anonimo.jpg" />
-                    <!--<h1>Olá, <span id="user-name">visitante</span>!</h1>-->
-                    <h1>Olá, <span data-bind="text: userName"></span>!</h1>
-                </div>
-                <div class="caixa">
-                   <button class="botao ui-btn btn btn-primary btn-lg" data-bind="click: login, visible: showLogar () === true">Login</button>
-                   <br />
-                   <button  class="botao ui-btn btn btn-primary btn-lg" data-bind="click: disconnect, visible: showDeslogar () === true">Desconectar</button>
-                    <button class="botao ui-btn btn btn-primary btn-lg" data-bind="click: desconectarApp, visible: showDeslogarApp () === true">Desconectar</button>
-                </div>
-             </div>
         </div>
 
-            <script type="text/javascript" src="cordova.js"></script>
-            <script type="text/javascript" src="scripts/platformOverrides.js"></script>
-            <script type="text/javascript" src="scripts/jquery-1.9.1.min.js"></script>
-            <script src="../plugins/cordova-plugin-googleplus/www/GooglePlus.js"></script>
-            <script src="../plugins/cordova-plugin-app-preferences/www/apppreferences.js"></script>
-            <script type="text/javascript" src="scripts/knockout-3.4.0.js"></script>
-            <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
-            <script type="text/javascript" src="scripts/index.js"></script>
-            <script type="text/javascript" src="scripts/script.js"></script>
-            <script>
-                var viewModel = new ViewModel();
-                ko.applyBindings(viewModel);
-            </script>
-</body>
+
+        <div data-bind="if: pagina() == 'home'" data-role="main" class="ui-content">
+           <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                     <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#"><span data-bind="text: userName"></span></a>
+                    </div>
+                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                             <button class="botao btn btn-default" data-bind="click: disconnect,  visible: botaoDesconectar () === true">Desconectar</button>
+                             <button class="botao btn btn-default" data-bind="click: removerDados, visible: botaoRemoverDados () === true">Desconectar</button>
+                        </ul>
+                    </div>
+                 </div>
+             </nav>
+            <button class="botao ui-btn btn btn-primary btn-lg" data-bind="click: abrirPorta">Abrir Porta</button>
+        </div>
+
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="scripts/platformOverrides.js"></script>
+        <script type="text/javascript" src="scripts/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="scripts/knockout-3.4.0.js"></script>
+        <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
+        <script type="text/javascript" src="scripts/index.js"></script>
+        <script type="text/javascript" src="scripts/script.js"></script>
+        <script src="../plugins/cordova-plugin-app-preferences/www/apppreferences.js"></script>
+        <script src="../plugins/cordova-plugin-googleplus/www/GooglePlus.js"></script>
+        <script>
+            var viewModel = new ViewModel();
+            ko.applyBindings(viewModel);
+        </script>
+    </body>
 </html>
