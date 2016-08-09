@@ -35,7 +35,7 @@
                      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
                              <button class="botao btn btn-default" data-bind="click: disconnect,  visible: botaoDesconectar () === true">Desconectar</button>
-                             <button class="botao btn btn-default" data-bind="click: removerDados, visible: botaoRemoverDados () === true">Desconectar</button>
+                             <button class="botao btn btn-default" data-bind="click: disconnect, visible: botaoRemoverDados () === true">Desconectar</button>
                         </ul>
                     </div>
                  </div>
@@ -50,8 +50,6 @@
         <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
         <script type="text/javascript" src="scripts/index.js"></script>
         <script type="text/javascript" src="scripts/script.js"></script>
-        <script src="../plugins/cordova-plugin-app-preferences/www/apppreferences.js"></script>
-        <script src="../plugins/cordova-plugin-googleplus/www/GooglePlus.js"></script>
         <script>
             var viewModel = new ViewModel();
             ko.applyBindings(viewModel);
