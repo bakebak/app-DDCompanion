@@ -153,13 +153,13 @@ botao{
   filter: blur(1px); 
 }
 
-.switch input:checked ~ label {
+/*.switch input:checked ~ label {
   box-shadow:
     inset 0 2px 3px rgba(255,255,255,0.13),
     0 5px 8px rgba(0,0,0,0.35),
     0 3px 10px 4px rgba(0,0,0,0.2);
   color: #072eb8;
-} 
+}*/
 
 .switch .icon-off:after {
   content: "";
@@ -183,3 +183,22 @@ botao{
     0 -2px 5px rgba(255,255,255,0.05),
     0 2px 5px rgba(255,255,255,0.1);
 }
+
+.abrindo-porta ~ label {
+    box-shadow:
+    inset 0 2px 3px rgba(255,255,255,0.13),
+    0 5px 8px rgba(0,0,0,0.35),
+    0 3px 10px 4px rgba(0,0,0,0.2);
+    color: #072eb8;
+}
+
+.loaderPage {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: url('http://i.imgur.com/zAD2y29.gif') 50% 50% no-repeat white;
+}
+
