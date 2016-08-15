@@ -18,36 +18,33 @@
         <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
         <title>DD Companion</title>
     </head>
-    <body class="fundo">
+    <body style="display: none;" class="fundo">
         <div data-bind="if: pagina() == 'loader', css: { 'loaderPage': loaderPage, }"></div>
-
         <div data-bind="if: pagina() == 'login'" data-role="main" class="ui-content">
             <div class="caixa">
                 <button class="botao ui-btn btn btn-primary btn-lg" data-bind="click: login, disable: btnLoginDesabilitado">Login</button>
                 <input type="checkbox" data-bind="checked: manterConectado" /> Manter-me conectado
             </div>
         </div>
-
-
         <div data-bind="if: pagina() == 'home'" data-role="main" class="ui-content">
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
-                        <div class="navbar-header">
+                    <div class="navbar-header">
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
                         </button>
                         <a class="navbar-brand" href="#"><span data-bind="text: userName"></span></a>
                     </div>
-                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
-                                <button class="botao btn btn-default" data-bind="click: disconnect, disable: btnDesconectarDesabilitado, visible: btnDesconectar () === true">Desconectar</button>
+                        <button class="botao btn btn-default" data-bind="click: disconnect, disable: btnDesconectarDesabilitado, visible: btnDesconectar () === true">Desconectar</button>
                         </ul>
                     </div>
-                    </div>
-                </nav>
+                </div>
+            </nav>
             <div class="container">
                 <section class="main">
                     <div class="switch">
@@ -67,6 +64,7 @@
         <script>
             var viewModel = new ViewModel();
             ko.applyBindings(viewModel);
+            $('.fundo').css('display', 'block');
         </script>
     </body>
 </html>
