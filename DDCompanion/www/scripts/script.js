@@ -3,7 +3,7 @@
     self.pagina = ko.observable('loader');
     self.loaderPage = ko.observable(true);
     self.btnLoginDesabilitado = ko.observable(false);
-    self.manterConectado = ko.observable(true);
+   // self.manterConectado = ko.observable(true);
     self.btnDesconectarDesabilitado = ko.observable(false);
     self.btnDesconectar = ko.observable(false);
     self.userName = ko.observable("visitante");
@@ -161,8 +161,9 @@
     function acessoPermitido(result) {
         self.pagina('home');
         self.loaderPage(false);
-        if (self.manterConectado() == true) { salvarUsuario(result); }
-        else { self.disconnect(); }
+        salvarUsuario(result);
+        //if (self.manterConectado() == true) { salvarUsuario(result); }
+        //else { self.disconnect(); }
         self.userName(result.displayName);
         self.btnDesconectar(true);
     }
