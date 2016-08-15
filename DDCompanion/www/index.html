@@ -24,8 +24,7 @@
         <div data-bind="if: pagina() == 'login'" data-role="main" class="ui-content">
             <div class="caixa">
                 <button class="botao ui-btn btn btn-primary btn-lg" data-bind="click: login, disable: btnLoginDesabilitado">Login</button>
-                <!--<button class="botao ui-btn btn btn-primary btn-lg" data-bind="click: desconectar">Desconectar</button>
-                <button class="botao ui-btn btn btn-primary btn-lg" data-bind="click: descon">Desc</button>-->
+                <input type="checkbox" data-bind="checked: manterConectado" /> Manter-me conectado
             </div>
         </div>
 
@@ -49,7 +48,6 @@
                     </div>
                     </div>
                 </nav>
-            <!--<button class="botao ui-btn btn btn-primary btn-lg" data-bind="click: abrirPorta">Abrir Porta</button>-->
             <div class="container">
                 <section class="main">
                     <div class="switch">

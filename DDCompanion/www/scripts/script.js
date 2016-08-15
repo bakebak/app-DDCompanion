@@ -10,6 +10,13 @@
     self.btnLoginDesabilitado = ko.observable(false);
     self.abrindoPorta = ko.observable(false);
     self.loaderPage = ko.observable(false);
+    self.manterConectado = ko.observable(true);
+    var mensagem = {
+        portaAberta: 'Porta aberta',
+        portaFechada: 'Porta não foi aberta',
+        semAcesso: 'E-mail não possui acesso',
+        erro: 'Erro de acesso'
+    }
 
    setTimeout(function () {
        var GooglePlus = window.plugins.googleplus;
@@ -58,7 +65,6 @@
         function (result) {
             removerDados();
         }, function (msg) {
-            alert("Disc " + msg);
         });
     }
 
@@ -67,12 +73,10 @@
         appp.remove(function (value) {
             self.pagina('login');
         }, function (err) {
-            //alert("Erro" + err);
         }, "usuario");
 
         appp.remove(function (valueToken) {
         }, function (err) {
-            //alert("Erro" + err);
         }, "token");
     }
 
@@ -120,21 +124,27 @@
             self.status(response.status);
             if (self.status() == true) {
                 //console.log("true");
-                if (self.token() != null) { acessoPermitido(result); console.log("Permitido");}
-                else if (self.token() == null) { portaAberta(); console.log("Não Permitido"); }
+                if (self.token() != null) { acessoPermitido(result); }
+                else if (self.token() == null) {
+                    mensagemPorta(mensagem.portaAberta);
+                    self.pagina('home');
+                    self.loaderPage(false);
+                }
             }
             else if (self.status() == false) {
-                if (self.pagina == 'login') { acessoNegado(); }
-                else if (self.pagina == 'home') { portaFechada(); }
+                acessoNegado(mensagem.semAcesso);
+                /*if (self.pagina == 'login') {
+                    acessoNegado(mensagem.semAcesso);
+                }
+                else if (self.pagina == 'home') {
+                    mensagemPorta(mensagem.portaFechada);
+                }*/
             }
 
         })
          .fail(function () {
-             alert("Error");
-             self.loaderPage(false);
-             self.pagina('login');
-             self.disconnect();
-             self.btnLoginDesabilitado(false);
+             console.log("Nao deu");
+             acessoNegado(mensagem.erro);
          });
         /*$.post(url,  function () {
             console.log(response);
@@ -142,44 +152,38 @@
         //console.log(self.token());
     }
 
-    function acessoNegado() {
-        self.loaderPage(false);
+    function acessoNegado(texto) {
         self.pagina('login');
-        alert("E-mail não possui acesso");
+        self.loaderPage(false);
+        alert(texto);
         self.disconnect();
         self.btnLoginDesabilitado(false);
     }
 
     function acessoPermitido(result) {
-        //console.log("Ola");
         self.pagina('home');
         self.loaderPage(false);
-        salvarUsuario(result);
+        if (self.manterConectado() == true) { salvarUsuario(result); }
+        else { self.disconnect(); }
         self.userName(result.displayName);
-        //window.location = "index.html";
         self.btnDesconectar(true);
     }
 
-    function portaAberta() {
+    function mensagemPorta(textoPorta) {
         self.loaderPage(false);
         self.abrindoPorta(false);
-        alert("Porta aberta");
-    }
-
-    function portaFechada() {
-        self.loaderPage(false);
-        self.abrindoPorta(false);
-        alert("Porta não foi aberta");
+        alert(textoPorta);
     }
 
     self.abrirPorta = function () {
-        console.log("Apertado");
+        /*console.log("Apertado");
         self.abrindoPorta(true);
         setTimeout(function () {
             self.abrindoPorta(false);
-        }, 3500);
+        }, 3500);*/
 
-        /*var url = "http://porta.digitaldesk.com.br/abrirporta?token=" + self.token();
-        validarEmail(url);*/
+        var url = "http://porta.digitaldesk.com.br/abrirporta?token=" + self.token();
+        console.log(url);
+        validarEmail(url);
     }
 }
