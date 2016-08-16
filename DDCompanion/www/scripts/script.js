@@ -6,11 +6,13 @@
    // self.manterConectado = ko.observable(true);
     self.btnDesconectarDesabilitado = ko.observable(false);
     self.btnDesconectar = ko.observable(false);
-    self.userName = ko.observable("visitante");
+    self.abrindoPorta = ko.observable(false);
+    self.user = ko.observable('');
     self.usuario = ko.observable('');
+    self.userName = ko.observable("visitante");
+    self.password = ko.observable('');
     self.token = ko.observable('');
     self.status = ko.observable('');
-    self.abrindoPorta = ko.observable(false);
     var mensagem = {
         portaAberta: 'Porta desenergizada',
         portaFechada: 'Porta não foi desenergizada',
@@ -64,7 +66,6 @@
     }
 
     function logout() {
-        console.log("Entrou aqui");
         window.plugins.googleplus.logout(
             function (msg) {
                 removerDados();
@@ -85,7 +86,6 @@
     }
 
     function removerDados() {
-        console.log("AQUi também");
         var appp = plugins.appPreferences;
         appp.remove(function (value) {
             self.pagina('login');
@@ -198,5 +198,33 @@
         var url = "http://porta.digitaldesk.com.br/abrirporta?token=" + self.token();
         validarEmail(url);
         self.abrindoPorta(true);
+    }
+
+    self.chamaPagina = function () {
+        self.pagina('modal');
+    }
+
+    self.logarUsuario = function () {
+        if (self.user() == "" ) {
+            alert("Preencha o campo de e-mail");
+        }
+        if (self.password() == "") {
+            alert("Preencha o campo de senha");
+        }
+        else if (self.user() != "" && self.password() != "") {
+            var url = 'http://porta.digitaldesk.com.br/autenticarcomusuario?key=' + self.password() + '&user=' + self.user();
+            validarUsuario(url);
+        }
+    }
+
+    function validarUsuario(url) {
+        $.post(url, function (response) {
+            if (response.status == true) {
+                alert("Usuario correto");
+            }
+            else if (response.status == false) {
+                alert("Usuario incorreto");
+            }
+        })
     }
 }

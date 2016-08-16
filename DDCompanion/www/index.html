@@ -23,9 +23,19 @@
         <div data-bind="if: pagina() == 'login'" data-role="main" class="ui-content">
             <div class="caixa">
                 <button class="botao ui-btn btn btn-primary btn-lg" data-bind="click: login, disable: btnLoginDesabilitado">Login</button>
-                <!--<input type="checkbox" data-bind="checked: manterConectado" /> Manter-me conectado-->
+                <button class="botao ui-btn btn btn-primary btn-lg" data-bind="click: chamaPagina">Show</button>
+                <!--<input data-bind="click: teste" type="button">
+                <label><i class='icon-cog' aria-hidden="true"></i></label>
+                <input type="checkbox" data-bind="checked: manterConectado" /> Manter-me conectado-->
             </div>
         </div>
+
+        <div data-bind="if: pagina() == 'modal'" data-role="main" class="ui-content">
+            <input data-bind="value: user" />
+            <input data-bind="value: password" />
+            <button class="botao ui-btn btn btn-primary btn-lg" data-bind="click: logarUsuario">Logar</button>
+        </div>
+
         <div data-bind="if: pagina() == 'home'" data-role="main" class="ui-content">
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
