@@ -67,7 +67,6 @@
         console.log("Entrou aqui");
         window.plugins.googleplus.logout(
             function (msg) {
-                console.log("Aqui " + msg)
                 removerDados();
             }
         );
@@ -86,6 +85,7 @@
     }
 
     function removerDados() {
+        console.log("AQUi também");
         var appp = plugins.appPreferences;
         appp.remove(function (value) {
             self.pagina('login');
@@ -141,13 +141,7 @@
             }
         })
         .fail(function () {
-            self.loaderPage(false);
-            setTimeout(function () {
-                self.abrindoPorta(false);
-            }, 3000);
-            alert(mensagem.erro);
-            logout();
-            self.btnLoginDesabilitado(false);
+            removerDesativado(mensagem.erro);
         });
     }
 
@@ -164,7 +158,8 @@
         self.loaderPage(false);
         self.abrindoPorta(false);
         alert(textoPorta);
-        logout();
+        self.btnLoginDesabilitado(false);
+        self.disconnect();
     }
 
 
