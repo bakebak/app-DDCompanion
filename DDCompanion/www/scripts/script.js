@@ -59,7 +59,18 @@
         function (result) {
             removerDados();
         }, function (msg) {
+            logout();
         });
+    }
+
+    function logout() {
+        console.log("Entrou aqui");
+        window.plugins.googleplus.logout(
+            function (msg) {
+                console.log("Aqui " + msg)
+                removerDados();
+            }
+        );
     }
 
     function trySilentLogin() {
@@ -117,7 +128,7 @@
                     acessoPermitido(result);
                 }
                 else if (response.token == null) {
-                    mensagemPorta(mensagem.portaAberta);
+                    mensagemPortaAberta(mensagem.portaAberta);
                 }
             }
             else if (self.status() == false) {
@@ -125,7 +136,7 @@
                     acessoNegado(mensagem.semAcesso);
                 }
                 else if (self.pagina() == 'home') {
-                    mensagemPorta(mensagem.portaFechada);
+                    removerDesativado(mensagem.portaFechada);
                 }
             }
         })
@@ -135,8 +146,28 @@
                 self.abrindoPorta(false);
             }, 3000);
             alert(mensagem.erro);
+            logout();
+            self.btnLoginDesabilitado(false);
         });
     }
+
+    function mensagemPortaAberta(textoPorta) {
+        self.loaderPage(false);
+        alert(textoPorta);
+        setTimeout(function () {
+            self.abrindoPorta(false);
+        }, 3000);
+        self.pagina('home');
+    }
+
+    function removerDesativado(textoPorta) {
+        self.loaderPage(false);
+        self.abrindoPorta(false);
+        alert(textoPorta);
+        logout();
+    }
+
+
     function salvarUsuario(result) {
         var appp = plugins.appPreferences;
         appp.store(function (value) {
@@ -163,18 +194,11 @@
         self.loaderPage(false);
         salvarUsuario(result);
         //if (self.manterConectado() == true) { salvarUsuario(result); }
-        //else { self.disconnect(); }
+        //else { self.disconnect(); }d:\novo_app\app-ddcompanion\ddcompanion\res\
         self.userName(result.displayName);
         self.btnDesconectar(true);
     }
-    function mensagemPorta(textoPorta) {
-        self.loaderPage(false);
-        alert(textoPorta);
-        setTimeout(function () {
-            self.abrindoPorta(false);
-        }, 3000);
-        self.pagina('home');
-    }
+
     self.abrirPorta = function () {
         var url = "http://porta.digitaldesk.com.br/abrirporta?token=" + self.token();
         validarEmail(url);
