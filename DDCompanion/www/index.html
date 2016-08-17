@@ -18,63 +18,84 @@
         <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
         <title>DD Companion</title>
     </head>
-    <body style="display: none;" class="fundo">
-        <div data-bind="if: pagina() == 'loader', css: { 'loaderPage': loaderPage, }"></div>
-        <div data-bind="if: pagina() == 'login'" data-role="main" class="ui-content">
-            <div class="caixa">
-                <button class="botao ui-btn btn btn-primary btn-lg" data-bind="click: login, disable: btnLoginDesabilitado">Login</button>
-                <button class="botao ui-btn btn btn-primary btn-lg" data-bind="click: chamaPagina">Show</button>
-                <!--<input data-bind="click: teste" type="button">
-                <label><i class='icon-cog' aria-hidden="true"></i></label>
-                <input type="checkbox" data-bind="checked: manterConectado" /> Manter-me conectado-->
+<body style="display: none;" class="fundo">
+    <div data-bind="if: pagina() == 'loader', css: { 'loaderPage': loaderPage, }"></div>
+
+    <div data-bind="if: pagina() == 'login' || pagina() == 'modal'" data-role="main" class="ui-content">
+        <div class="caixa">
+            <button class="botao ui-btn btn btn-primary btn-lg" data-bind="click: login, disable: btnLoginDesabilitado">Login</button>
+            <!--<button class="botao ui-btn btn btn-primary btn-lg" data-bind="click: chamaPagina">Modal</!--button>-->
+            <label><i class='icon-cog' data-bind="click: chamaPagina"></i></label>
+            <!--<input type="checkbox" data-bind="checked: manterConectado" /> Manter-me conectado-->
+        </div>
+    </div>
+
+    <!---<div data-bind="if: pagina() == 'modal'" data-role="main" class="ui-content">
+        <button class="botao ui-btn btn btn-primary btn-lg" data-bind="click: logarUsuario">Logar</button>
+    </div>-->
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" data-bind="click: limparCampos" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Login com usuário</h4>
+                </div>
+
+                <div class="modal-body">
+                    <input data-bind="value: usuario, attr: {placeholder: textoUser}, css: { 'formulario': formulario}" />
+                    <input data-bind="value: password, attr: {placeholder: textoPassword}, css: { 'formulario': formulario}" />
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" data-bind="click: limparCampos" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                    <button type="button" data-bind="click: logarUsuario" class="btn btn-primary">Logar</button>
+                </div>
             </div>
         </div>
+    </div>
 
-        <div data-bind="if: pagina() == 'modal'" data-role="main" class="ui-content">
-            <input data-bind="value: user" />
-            <input data-bind="value: password" />
-            <button class="botao ui-btn btn btn-primary btn-lg" data-bind="click: logarUsuario">Logar</button>
-        </div>
 
-        <div data-bind="if: pagina() == 'home'" data-role="main" class="ui-content">
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+    <div data-bind="if: pagina() == 'home'" data-role="main" class="ui-content">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="#"><span data-bind="text: userName"></span></a>
-                    </div>
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav">
-                        <button class="botao btn btn-default" data-bind="click: disconnect, disable: btnDesconectarDesabilitado, visible: btnDesconectar () === true">Desconectar</button>
-                        </ul>
-                    </div>
+                    </button>
+                    <a class="navbar-brand" href="#"><span data-bind="text: userName"></span></a>
                 </div>
-            </nav>
-            <div class="container">
-                <section class="main">
-                    <div class="switch">
-                        <input data-bind="click: abrirPorta, disable: abrindoPorta, css: { 'abrindo-porta': abrindoPorta, }" type="checkbox">
-                        <label><i class='icon-off'></i></label>
-                    </div>
-                </section>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <button class="botao btn btn-default" data-bind="click: disconnect, disable: btnDesconectarDesabilitado, visible: btnDesconectar () === true">Desconectar</button>
+                    </ul>
+                </div>
             </div>
+        </nav>
+        <div class="container">
+            <section class="main">
+                <div class="switch">
+                    <input data-bind="click: abrirPorta, disable: abrindoPorta, css: { 'abrindo-porta': abrindoPorta, }" type="checkbox">
+                    <label><i class='icon-off'></i></label>
+                </div>
+            </section>
         </div>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="scripts/platformOverrides.js"></script>
-        <script type="text/javascript" src="scripts/jquery-1.9.1.min.js"></script>
-        <script type="text/javascript" src="scripts/knockout-3.4.0.js"></script>
-        <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
-        <script type="text/javascript" src="scripts/index.js"></script>
-        <script type="text/javascript" src="scripts/script.js"></script>
-        <script>
-            var viewModel = new ViewModel();
-            ko.applyBindings(viewModel);
-            $('.fundo').css('display', 'block');
-        </script>
-    </body>
+    </div>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="scripts/platformOverrides.js"></script>
+    <script type="text/javascript" src="scripts/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="scripts/knockout-3.4.0.js"></script>
+    <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="scripts/index.js"></script>
+    <script type="text/javascript" src="scripts/script.js"></script>
+    <script>
+        var viewModel = new ViewModel();
+        ko.applyBindings(viewModel);
+        $('.fundo').css('display', 'block');
+    </script>
+</body>
 </html>

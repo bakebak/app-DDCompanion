@@ -202,3 +202,7 @@ botao{
 	background: url('img/zAD2y29.gif') 50% 50% no-repeat white;
 }
 
+.formulario{
+    width: 95%;
+    margin: 8px;
+}
