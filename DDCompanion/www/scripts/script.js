@@ -20,7 +20,8 @@
         portaAberta: 'Porta desenergizada',
         portaFechada: 'Porta não foi desenergizada',
         semAcesso: 'E-mail não possui acesso',
-        erro: 'Erro de acesso'
+        erro: 'Erro de acesso',
+        campoVazio: 'Preencha todos os campos'
     }
 
    setTimeout(function () {
@@ -90,7 +91,6 @@
             function (obj) {
             });
     }
-
     function removerDados() {
         var appp = plugins.appPreferences;
         appp.remove(function (value) {
@@ -104,7 +104,6 @@
         }, "token");
     }
 
-
     self.login = function () {
         self.btnDesconectarDesabilitado(false);
         self.btnLoginDesabilitado(true);
@@ -116,7 +115,8 @@
                 'offline': true,
             },
             function (result) {
-                var url = 'http://porta.digitaldesk.com.br/autenticar/google?token=' + result.serverAuthCode;
+                var url = 'http://porta.digitaldesk.com.br/autenticar?token=' + result.serverAuthCode;
+                //var url = 'http://porta.digitaldesk.com.br/autenticar/google?token=' + result.serverAuthCode;
                 validarEmail(url, result);
             },
             function (msg) {
@@ -126,11 +126,12 @@
     }
 
     function validarEmail(url, result) {
-        self.loaderPage(true);
+       self.loaderPage(true);
         $.post(url, function (response) {
             self.status(response.status);
             if (self.status() == true) {
                 if (response.token != null) {
+                    console.log(self.pagina());
                     if (self.pagina() == 'login') {
                         self.token(response.token);
                         acessoPermitido(result);
@@ -173,6 +174,7 @@
         self.btnLoginDesabilitado(false);
         self.disconnect();
     }
+
     function acessoNegado(texto) {
         self.loaderPage(false);
         self.pagina('login');
@@ -219,32 +221,20 @@
     }
 
     self.logarUsuario = function () {
-        if (self.usuario() == "") {
-            alert("Preencha o campo de e-mail");
+        if (self.usuario() == "" || self.password() == "") {
+            alert(mensagem.campoVazio);
         }
-        if (self.password() == "") {
-            alert("Preencha o campo de senha");
+        else if (self.usuario() == "" && self.password() == "") {
+            alert(mensagem.campoVazio);
         }
-        else if (self.usuario() != "" && self.password() != "") {
-            var url = 'http://porta.digitaldesk.com.br/autenticar/usuario?key=' + self.password() + '&user=' + self.usuario();
-            console.log(url);
-            validarEmail(url);
+        if (self.usuario() != "" && self.password() != "") {
+            //var url = 'http://porta.digitaldesk.com.br/autenticar/usuario?key=' + self.password() + '&user=' + self.usuario();
+            //validarEmail(url);
         }
     }
 
     self.limparCampos = function () {
         self.usuario('');
         self.password('');
-    }
-
-    function validarUsuario(url) {
-        $.post(url, function (response) {
-            if (response.status == true) {
-               
-            }
-            else if (response.status == false) {
-                alert("Usuario incorreto");
-            }
-        })
     }
 }
