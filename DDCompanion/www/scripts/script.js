@@ -115,8 +115,7 @@
                 'offline': true,
             },
             function (result) {
-                var url = 'http://porta.digitaldesk.com.br/autenticar?token=' + result.serverAuthCode;
-                //var url = 'http://porta.digitaldesk.com.br/autenticar/google?token=' + result.serverAuthCode;
+                var url = 'http://porta.digitaldesk.com.br/autenticar/google?token=' + result.serverAuthCode;
                 validarEmail(url, result);
             },
             function (msg) {
@@ -131,7 +130,6 @@
             self.status(response.status);
             if (self.status() == true) {
                 if (response.token != null) {
-                    console.log(self.pagina());
                     if (self.pagina() == 'login') {
                         self.token(response.token);
                         acessoPermitido(result);
@@ -142,7 +140,7 @@
                         acessoPermitido(dadosUsuario);
                     }
                 }
-                else if (response.token == null) { mensagemPortaAberta(mensagem.portaAberta); }
+               else if (response.token == null) { mensagemPortaAberta(mensagem.portaAberta); }
             }
             else if (self.status() == false) {
                 if (self.pagina() == 'login' || self.pagina() == 'modal') {
@@ -228,8 +226,8 @@
             alert(mensagem.campoVazio);
         }
         if (self.usuario() != "" && self.password() != "") {
-            //var url = 'http://porta.digitaldesk.com.br/autenticar/usuario?key=' + self.password() + '&user=' + self.usuario();
-            //validarEmail(url);
+            var url = 'http://porta.digitaldesk.com.br/autenticar/usuario?key=' + self.password() + '&user=' + self.usuario();
+            validarEmail(url);
         }
     }
 
@@ -237,4 +235,5 @@
         self.usuario('');
         self.password('');
     }
+
 }

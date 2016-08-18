@@ -13,7 +13,9 @@
     text-align: center;
     margin: 10px;
 }
-
+.logarUsuario{
+    margin: 15px;
+}
 .user {
     padding:40px 5px;
     background: #FFFFFF;

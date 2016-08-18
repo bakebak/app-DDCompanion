@@ -24,11 +24,11 @@
     <div data-bind="if: pagina() == 'login' || pagina() == 'modal'" data-role="main" class="ui-content">
         <div class="caixa">
             <button class="botao ui-btn btn btn-primary btn-lg" data-bind="click: login, disable: btnLoginDesabilitado">Login</button>
-            <!--<button class="botao ui-btn btn btn-primary btn-lg" data-bind="click: chamaPagina">Modal</!--button>-->
-           <label><i class='icon-cog' data-bind="click: chamaPagina"></i></label>
-            <!--<input type="checkbox" data-bind="checked: manterConectado" /> Manter-me conectado-->
-        </div>
-    </div>
+            <div class="logarUsuario" data-bind="click: chamaPagina, disable: abrindoPorta, css: { 'abrindo-porta': abrindoPorta, }">
+                Logar com o usuário  <span style="font-size: 15px"><i class="icon-cog"></i></span>
+            </div>
+         </div>
+      </div>
 
     <!---<div data-bind="if: pagina() == 'modal'" data-role="main" class="ui-content">
         <button class="botao ui-btn btn btn-primary btn-lg" data-bind="click: logarUsuario">Logar</button>
@@ -45,7 +45,7 @@
 
                 <div class="modal-body">
                     <input data-bind="value: usuario, attr: {placeholder: textoUser}, css: { 'formulario': formulario}" />
-                    <input data-bind="value: password, attr: {placeholder: textoPassword}, css: { 'formulario': formulario}" />
+                    <input  type="password" data-bind="value: password, attr: {placeholder: textoPassword}, css: { 'formulario': formulario}" />
                 </div>
 
                 <div class="modal-footer">
