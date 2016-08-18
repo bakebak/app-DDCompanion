@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
+</head>
+<body>
+    <button class="btn btn-primary" data-bind="click: show">Show modal</button>
+
+    <div data-bind="modal: {
+        visible: modalVisible,
+        dialogCss: modalSize,
+        header: { data: { label: headerLabel } },
+        body: { name: bodyTemplate, data: bodyData },
+        footer: { data: { action: switchTemplates, closeLabel: 'Cancelar', primaryLabel: 'Logar' } }
+    }"></div>
+
+    <script type="text/html" id="firstModalTemplate">
+        <p data-bind="text: text"></p>
+        <div class="form-group">
+            <label data-bind="text: label"></label>
+            <input type="text" data-bind="value: label, valueUpdate: 'afterkeydown'" class="form-control" />
+        </div>
+    </script>
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="scripts/platformOverrides.js"></script>
+    <script type="text/javascript" src="scripts/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="scripts/knockout-3.4.0.js"></script>
+    <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="scripts/knockstrap.js"></script>
+    <script type="text/javascript" src="scripts/knockstrap.min.js"></script>
+    <script type="text/javascript" src="scripts/index.js"></script>
+    <script type="text/javascript" src="scripts/teste.js"></script>
+    <script>
+        var viewModel = new ViewModel();
+        ko.applyBindings(viewModel);
+    </script>
+</body>
+</html>

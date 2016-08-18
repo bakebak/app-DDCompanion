@@ -15,6 +15,9 @@
 }
 .logarUsuario{
     margin: 15px;
+    position: fixed;
+    left:15%;
+    margin-left:60px;
 }
 .user {
     padding:40px 5px;

@@ -116,7 +116,8 @@
             },
             function (result) {
                 var url = 'http://porta.digitaldesk.com.br/autenticar/google?token=' + result.serverAuthCode;
-                validarEmail(url, result);
+                console.log(result.serverAuthCode);
+                //validarEmail(url, result);
             },
             function (msg) {
                 self.btnLoginDesabilitado(false);
@@ -182,8 +183,8 @@
     }
     function acessoPermitido(result) {
         console.log(result);
-        self.loaderPage(false);
         $('#myModal').modal("hide");
+        self.loaderPage(false);
         self.pagina('home');
         self.btnDesconectar(true);
         self.btnDesconectarDesabilitado(false);
