@@ -1,7 +1,7 @@
 ﻿function ViewModel() {
     var self = this;
-    self.pagina = ko.observable('loader');
-    self.loaderPage = ko.observable(true);
+    self.pagina = ko.observable('login');
+    self.loaderPage = ko.observable(false);
     self.btnLoginDesabilitado = ko.observable(false);
    // self.manterConectado = ko.observable(true);
     self.btnDesconectarDesabilitado = ko.observable(false);
@@ -13,7 +13,6 @@
     self.token = ko.observable('');
     self.status = ko.observable('');
     self.formulario = ko.observable(false);
-
     self.textoUser = ko.observable('Digite seu usuário');
     self.textoPassword = ko.observable('Digite sua senha');
     var mensagem = {
@@ -23,6 +22,16 @@
         erro: 'Erro de acesso',
         campoVazio: 'Preencha todos os campos'
     }
+
+    $(document).ready(function () {
+        var sideslider = $('[data-toggle=collapse-side]');
+        var sel = sideslider.attr('data-target');
+        var sel2 = sideslider.attr('data-target-2');
+        sideslider.click(function (event) {
+            $(sel).toggleClass('in');
+            $(sel2).toggleClass('out');
+        });
+    });
 
    setTimeout(function () {
        var GooglePlus = window.plugins.googleplus;
@@ -40,8 +49,13 @@
            console.log("Erro " + err);
        }, "token"
        );
-   }, 500);
 
+       sideslider.click(function (event) {
+           $(sel).toggleClass('in');
+           $(sel2).toggleClass('out');
+       });
+
+   }, 500);
     function checarCampos(value) {
         if (value != null) {
             self.pagina('home');
@@ -105,6 +119,7 @@
     }
 
     self.login = function () {
+        console.log("AQpetgg");
         self.btnDesconectarDesabilitado(false);
         self.btnLoginDesabilitado(true);
         var GooglePlus = window.plugins.googleplus;
@@ -117,7 +132,7 @@
             function (result) {
                 var url = 'http://porta.digitaldesk.com.br/autenticar/google?token=' + result.serverAuthCode;
                 console.log(result.serverAuthCode);
-                //validarEmail(url, result);
+                validarEmail(url, result);
             },
             function (msg) {
                 self.btnLoginDesabilitado(false);

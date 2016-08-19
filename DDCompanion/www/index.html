@@ -16,79 +16,115 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css" />
     <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+    <script src="https://apis.google.com/js/api:client.js"></script>
     <title>DD Companion</title>
 </head>
 <body style="display: none;" class="fundo">
     <div data-bind="if: pagina() == 'loader', css: { 'loaderPage': loaderPage, }"></div>
 
-    <div data-bind="if: pagina() == 'login' || pagina() == 'modal'" data-role="main" class="ui-content">
-        <div class="caixa">
-            <button class="botao ui-btn btn btn-primary btn-lg" data-bind="click: login, disable: btnLoginDesabilitado">Login</button>
-            <div class="logarUsuario" data-bind="click: chamaPagina, disable: abrindoPorta, css: { 'abrindo-porta': abrindoPorta, }">
-                Logar com o usuário  <span style="font-size: 15px"><i class="icon-cog"></i></span>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" data-bind="click: limparCampos" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Login com usuário</h4>
-                </div>
-
-                <div class="modal-body">
-                    <input data-bind="value: usuario, attr: {placeholder: textoUser}, css: { 'formulario': formulario}" />
-                    <input type="password" data-bind="value: password, attr: {placeholder: textoPassword}, css: { 'formulario': formulario}" />
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" data-bind="click: limparCampos" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                    <button type="button" data-bind="click: logarUsuario" class="btn btn-primary">Logar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div data-bind="if: pagina() == 'home'" data-role="main" class="ui-content">
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
+    <div data-bind="if: pagina() == 'login' || pagina() == 'modal'">
+        <header role="banner" class="navbar navbar-fixed-top navbar-inverse">
+            <div class="container">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#"><span data-bind="text: userName"></span></a>
+                    <button data-toggle="collapse-side" data-target=".side-collapse" data-target-2=".side-collapse-container" type="button" class="navbar-toggle pull-left"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
                 </div>
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <button class="botao btn btn-default" data-bind="click: disconnect, disable: btnDesconectarDesabilitado, visible: btnDesconectar () === true">Desconectar</button>
-                    </ul>
+                <div class="navbar-inverse side-collapse in">
+                    <nav role="navigation" class="navbar-collapse">
+                        <ul class="nav navbar-nav">
+                            <li><a href="#Home">Home</a></li>
+                            <li><a href="#users">Users</a></li>
+                            <li><a href="http://placesforlove.com">Places</a></li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
-        </nav>
-        <div class="container">
-            <section class="main">
-                <div class="switch">
-                    <input data-bind="click: abrirPorta, disable: abrindoPorta, css: { 'abrindo-porta': abrindoPorta, }" type="checkbox">
-                    <label><i class='icon-off'></i></label>
+        </header>
+        <div class="container side-collapse-container">
+            <div class="row">
+                    <div data-role="main" class="ui-content">
+                        <div class="caixa">
+                            <div class="img-circle logo">
+                                <img src="css/img/logoDigitalDesk.png" />
+                                <h3>DigitalDesk Companion</h3>
+                            </div>
+
+                            <div data-bind="click: login, disable: btnLoginDesabilitado">
+                                <div id="customBtn">
+                                    <span class="icon"></span>
+                                    <span class="buttonText">Continue</span>
+                                </div>
+                            </div>
+                            <div class="caixaLogin">
+                                or <a data-bind="click: chamaPagina,  disable: abrindoPorta, css: { 'abrindo-porta': abrindoPorta, }">login</a> with user
+                            </div>
+                        </div>
+                        </>
+                    </div>
                 </div>
-            </section>
-        </div>
-    </div>
-    <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="scripts/platformOverrides.js"></script>
-    <script type="text/javascript" src="scripts/jquery-1.9.1.min.js"></script>
-    <script type="text/javascript" src="scripts/knockout-3.4.0.js"></script>
-    <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
-    <script type="text/javascript" src="scripts/index.js"></script>
-    <script type="text/javascript" src="scripts/script.js"></script>
-    <script>
-        var viewModel = new ViewModel();
-        ko.applyBindings(viewModel);
-        $('.fundo').css('display', 'block');
-    </script>
+            </div>
+
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" data-bind="click: limparCampos" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Login com usuário</h4>
+                            </div>
+
+                            <div class="modal-body">
+                                <input data-bind="value: usuario, attr: {placeholder: textoUser}, css: { 'formulario': formulario}" />
+                                <input type="password" data-bind="value: password, attr: {placeholder: textoPassword}, css: { 'formulario': formulario}" />
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" data-bind="click: limparCampos" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                                <button type="button" data-bind="click: logarUsuario" class="btn btn-primary">Logar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div data-bind="if: pagina() == 'home'" data-role="main" class="ui-content">
+                    <nav class="navbar navbar-default">
+                        <div class="container-fluid">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand" href="#"><span data-bind="text: userName"></span></a>
+                            </div>
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                <ul class="nav navbar-nav">
+                                    <button class="botao btn btn-default" data-bind="click: disconnect, disable: btnDesconectarDesabilitado, visible: btnDesconectar () === true">Desconectar</button>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                    <div class="container">
+                        <section class="main">
+                            <div class="switch">
+                                <input data-bind="click: abrirPorta, disable: abrindoPorta, css: { 'abrindo-porta': abrindoPorta, }" type="checkbox">
+                                <label><i class='icon-off'></i></label>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <script type="text/javascript" src="cordova.js"></script>
+                <script type="text/javascript" src="scripts/platformOverrides.js"></script>
+                <script type="text/javascript" src="scripts/jquery-1.9.1.min.js"></script>
+                <script type="text/javascript" src="scripts/knockout-3.4.0.js"></script>
+                <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
+                <script type="text/javascript" src="scripts/index.js"></script>
+                <script type="text/javascript" src="scripts/script.js"></script>
+                <script>
+                    var viewModel = new ViewModel();
+                    ko.applyBindings(viewModel);
+                    $('.fundo').css('display', 'block');
+                </script>
 </body>
 </html>

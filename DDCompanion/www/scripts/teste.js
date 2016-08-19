@@ -20,4 +20,5 @@
     self.switchTemplates = function () {
         console.log("ALo");
     };
+
 }
