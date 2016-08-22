@@ -23,7 +23,7 @@
         campoVazio: 'Preencha todos os campos'
     }
 
-    $(document).ready(function () {
+    /*$(document).ready(function () {
         var sideslider = $('[data-toggle=collapse-side]');
         var sel = sideslider.attr('data-target');
         var sel2 = sideslider.attr('data-target-2');
@@ -31,7 +31,7 @@
             $(sel).toggleClass('in');
             $(sel2).toggleClass('out');
         });
-    });
+    });*/
 
    setTimeout(function () {
        var GooglePlus = window.plugins.googleplus;
@@ -49,12 +49,6 @@
            console.log("Erro " + err);
        }, "token"
        );
-
-       sideslider.click(function (event) {
-           $(sel).toggleClass('in');
-           $(sel2).toggleClass('out');
-       });
-
    }, 500);
     function checarCampos(value) {
         if (value != null) {
@@ -132,7 +126,7 @@
             function (result) {
                 var url = 'http://porta.digitaldesk.com.br/autenticar/google?token=' + result.serverAuthCode;
                 console.log(result.serverAuthCode);
-                validarEmail(url, result);
+                //validarEmail(url, result);
             },
             function (msg) {
                 self.btnLoginDesabilitado(false);
@@ -197,7 +191,6 @@
         self.btnLoginDesabilitado(false);
     }
     function acessoPermitido(result) {
-        console.log(result);
         $('#myModal').modal("hide");
         self.loaderPage(false);
         self.pagina('home');
@@ -205,6 +198,7 @@
         self.btnDesconectarDesabilitado(false);
         salvarUsuario(result);
         self.userName(result.displayName);
+        console.log(self.pagina());
     }
 
     function salvarUsuario(result) {
@@ -251,5 +245,7 @@
         self.usuario('');
         self.password('');
     }
-
+    self.navbar = function () {
+        console.log("ALO");
+    }
 }
