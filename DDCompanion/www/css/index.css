@@ -11,7 +11,7 @@
 
 /*TELA LOGIN*/
 .fundo { /*body*/
-    background: #f7f2f6;
+    background: #FFF;
 }
 
 .caixa{
@@ -250,7 +250,8 @@ span.buttonText {
     height: 100px;
     border-radius: 50%;
     display: block;
-    margin: 0 auto 10px auto;
+    margin: 15px;
+    //margin: 0 auto 10px auto;
 }
  
 fundoHome{
@@ -261,8 +262,11 @@ fundoHome{
 pre {
     tab-size: 8;
 }
-      
+
 @media screen and (max-width: 768px) {
+    .navbar-inverse .side-collapse {
+      background: #FFF;
+    }
     .side-collapse-container{
         width:100%;
         //position:fixed;
@@ -289,6 +293,15 @@ pre {
         background: linear-gradient(to right, #000 50%, #F00 50%);
     }*/
     .footerSidebar{
-        margin-top: 70%;
+        //margin-top: 80%;
+        width: 100%;
+        bottom: 0;
+        position: absolute;
     }
+
+    #caixaUsuario{
+        margin-top: -20px;
+        background: #333;
+    }
+
 }

@@ -23,16 +23,6 @@
         campoVazio: 'Preencha todos os campos'
     }
 
-    /*$(document).ready(function () {
-        var sideslider = $('[data-toggle=collapse-side]');
-        var sel = sideslider.attr('data-target');
-        var sel2 = sideslider.attr('data-target-2');
-        sideslider.click(function (event) {
-            $(sel).toggleClass('in');
-            $(sel2).toggleClass('out');
-        });
-    });*/
-
    setTimeout(function () {
        var GooglePlus = window.plugins.googleplus;
        var appp = plugins.appPreferences;
@@ -50,6 +40,7 @@
        }, "token"
        );
    }, 500);
+
     function checarCampos(value) {
         if (value != null) {
             self.pagina('home');
@@ -126,7 +117,7 @@
             function (result) {
                 var url = 'http://porta.digitaldesk.com.br/autenticar/google?token=' + result.serverAuthCode;
                 console.log(result.serverAuthCode);
-                //validarEmail(url, result);
+                validarEmail(url, result);
             },
             function (msg) {
                 self.btnLoginDesabilitado(false);
@@ -245,7 +236,9 @@
         self.usuario('');
         self.password('');
     }
+
     self.navbar = function () {
-        console.log("ALO");
+        console.log("Aqui");
     }
+
 }

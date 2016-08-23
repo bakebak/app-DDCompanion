@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, rt" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title></title>
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -67,15 +67,23 @@
         <header role="banner" class="navbar navbar-fixed-top navbar-inverse">
             <div class="container">
                 <div class="navbar-header">
-                    <button data-toggle="collapse-side" data-target=".side-collapse" data-target-2=".side-collapse-container" type="button" class="navbar-toggle pull-left"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+                    <button data-toggle="collapse-side" data-target=".side-collapse" data-target-2=".side-collapse-container" type="button" class="navbar-toggle pull-left">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
                 </div>
                 <div class="navbar-inverse side-collapse in">
                     <nav role="navigation" class="navbar-collapse">
                         <ul class="nav navbar-nav">
-                            <li><img src="css/img/user-anonimo.jpg" id="user-photo" />
-                            <li><a href="#users">Luisa Antoni da Rocha</a></li>
-                            <li><a href="http://placesforlove.com">user.name@digitaldesk.com.br</a></li>
-                            <li class="footerSidebar"><a>ALOOO</a></li>
+                            <div id="caixaUsuario">
+                                <li><img src="css/img/user-anonimo.jpg" id="user-photo" />
+                                <li><a href="#users"> Luisa Antoni da Rocha</a></li>
+                                <li><a href="http://placesforlove.com"> user.name@digitaldesk.com.br</a></li>
+                            </div>
+                            <div class="footerSidebar">
+                                <li data-bind="click: disconnect"><a> Desconectar</a></li>
+                            </div>
                         </ul>
                     </nav>
                 </div>
@@ -112,6 +120,7 @@
                     var sel = sideslider.attr('data-target');
                     var sel2 = sideslider.attr('data-target-2');
                     sideslider.click(function (event) {
+                        console.log("Apertado");
                         $(sel).toggleClass('in');
                         $(sel2).toggleClass('out');
                     });
