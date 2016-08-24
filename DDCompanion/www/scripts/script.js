@@ -1,6 +1,6 @@
 ﻿function ViewModel() {
     var self = this;
-    self.pagina = ko.observable('home');
+    self.pagina = ko.observable('login');
     self.loaderPage = ko.observable(false);
     self.btnLoginDesabilitado = ko.observable(false);
    // self.manterConectado = ko.observable(true);
@@ -46,6 +46,8 @@
         if (value != null) {
             self.loaderPage(false);
             self.pagina('home');
+            $('.button-collapse').sideNav('show');
+            $('.button-collapse').sideNav();
             self.userName(value);
             self.btnDesconectar(true);
             self.btnLoginDesabilitado(true);
@@ -97,6 +99,8 @@
         var appp = plugins.appPreferences;
         appp.remove(function (value) {
             self.pagina('login');
+            $('.button-collapse').sideNav('hide');
+            $('.button-collapse').sideNav();
             self.limparCampos();
         }, function (err) {
         }, "usuario");
@@ -167,6 +171,8 @@
             self.abrindoPorta(false);
         }, 3000);
         self.pagina('home');
+        $('.button-collapse').sideNav('show');
+        $('.button-collapse').sideNav();
     }
 
     function removerDesativado(textoPorta) {
@@ -188,6 +194,8 @@
         $('#myModal').modal("hide");
         self.loaderPage(false);
         self.pagina('home');
+        $('.button-collapse').sideNav('show');
+        $('.button-collapse').sideNav();
         self.btnDesconectar(true);
         self.btnDesconectarDesabilitado(false);
         salvarUsuario(result);
