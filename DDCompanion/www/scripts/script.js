@@ -1,6 +1,6 @@
 ﻿function ViewModel() {
     var self = this;
-    self.pagina = ko.observable('login');
+    self.pagina = ko.observable('home');
     self.loaderPage = ko.observable(false);
     self.btnLoginDesabilitado = ko.observable(false);
    // self.manterConectado = ko.observable(true);
@@ -39,23 +39,26 @@
            console.log("Erro " + err);
        }, "token"
        );
-   }, 500);
+   }, 1500);
+
 
     function checarCampos(value) {
         if (value != null) {
-            self.pagina('home');
             self.loaderPage(false);
+            self.pagina('home');
             self.userName(value);
             self.btnDesconectar(true);
             self.btnLoginDesabilitado(true);
         }
         else {
             self.loaderPage(false);
+            console.log("Nada salvo");
             self.pagina('login');
         }
     }
 
     self.disconnect = function () {
+        console.log("desc");
         self.btnDesconectarDesabilitado(true);
         self.btnLoginDesabilitado(false);
         var GooglePlus = window.plugins.googleplus;
@@ -208,9 +211,10 @@
     }
 
     self.abrirPorta = function () {
+        console.log("abrirPorta");
         var url = "http://porta.digitaldesk.com.br/abrirporta?token=" + self.token();
-        validarEmail(url);
-        self.abrindoPorta(true);
+        //validarEmail(url);
+        //self.abrindoPorta(true);
     }
 
     self.chamaPagina = function () {
@@ -237,8 +241,8 @@
         self.password('');
     }
 
-    self.navbar = function () {
-        console.log("Aqui");
+    self.testeNav = function () {
+        console.log("Apertado navbar");
     }
 
 }

@@ -8,20 +8,25 @@
 	z-index: 9999;
 	background: url('img/zAD2y29.gif') 50% 50% no-repeat white;
 }
+/*
+.preloader{
+    position:absolute;
+    top:50%;
+	left:50%;
+	margin-top:-35px;
+	margin-left:-32px;
+}*/
 
 /*TELA LOGIN*/
 .fundo { /*body*/
     background: #FFF;
 }
 
-.caixa{
-    text-align: center;
-}
-
 .titulo{
-    position:absolute;
-    top:25%;
-    margin-left: 15%;
+    //position:absolute;
+    margin-top: 170px;
+    text-align: center;
+    //margin-left: 15%;
 }
 .logo img{
     width: 120px;
@@ -56,13 +61,14 @@
 	left:50%;
     margin-top: 150px;
 	margin-left:-60px;
+    text-align: center;
     /*font-family: serif;
     font-weight: normal;*/
 }
 
-#myModal{
+/*#myModal{
    margin-top: 42%;
-}
+}*/
 
 .formulario{
     width: 95%;
@@ -83,7 +89,7 @@
     top: 0;
     left: 50%;
     margin-left: -125px; /* metade da largura */
-    margin-top: 80%; /* metade da altura */
+    margin-top: 85%; /* metade da altura */
 }
 
 span.label {
@@ -96,7 +102,7 @@ span.icon {
     vertical-align: middle;
     width: 42px;
     height: 42px;
-    margin-left: -20%;
+    margin-left: 6px;
     margin-top: 6px;
 }
 
@@ -122,19 +128,23 @@ span.buttonText {
   margin: 0;
 }
 
-.switch {
+.switch-door {
   margin: 50% auto;
   position: relative;
 }
 
-.switch label {
+.switch-door [type="checkbox"]+label {
   width: 100%;
   height: 100%;
   position: relative;
   display: block;
+  padding:0;
+  line-height: inherit;
+  font-size: 70px;
+
 }
 
-.switch input {
+.switch-door input {
   top: 0; 
   right: 0; 
   bottom: 0; 
@@ -147,12 +157,16 @@ span.buttonText {
   cursor: pointer;
 }
 
-.switch {
+    .switch-door [type="checkbox"]:not(:checked), [type="checkbox"]:checked {        
+        left:inherit;
+    }
+
+.switch-door  {
   width: 150px;
   height: 150px;
 }
 
-.switch label {
+.switch-door [type="checkbox"]+label {
   border-radius: 50%;
   background: #b2ac9e;
   background: -moz-linear-gradient(#f7f2f6, #b2ac9e);
@@ -182,7 +196,7 @@ span.buttonText {
   z-index: -1;
 }
 
-.switch label:after {
+.switch-door [type="checkbox"]+label:before{
   content: ""; 
   position: absolute;
   left: -20px;
@@ -191,29 +205,34 @@ span.buttonText {
   bottom: -20px;
   z-index: -2;
   border-radius: inherit;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.1),
-    0 1px 2px rgba(0,0,0,0.3),
-    0 0 10px rgba(0,0,0,0.15);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.1),0 1px 2px rgba(0,0,0,0.3),0 0 10px rgba(0,0,0,0.15);
+  height:auto;
+  width: auto;
+  border: none;
 }
 
-.switch label:before {
-  content: ""; 
-  position: absolute;
-  left: -10px;
-  right: -10px;
-  top: -10px;
-  bottom: -10px;
-  z-index: -1;
-  border-radius: inherit;
-  box-shadow: inset 0 10px 10px rgba(0,0,0,0.13); 
-  -webkit-filter:blur(1px);
-  -moz-filter:blur(1px);
-  -ms-filter:blur(1px);
-  -o-filter:blur(1px);
-  filter: blur(1px); 
+.switch-door [type="checkbox"]:not(.filled-in) + label:after {
+    content: ""; 
+    position: absolute;
+    left: -10px;
+    right: -10px;
+    top: -10px;
+    bottom: -10px;
+    z-index: -1;
+    border-radius: inherit;
+    box-shadow: inset 0 10px 10px rgba(0,0,0,0.13); 
+    -webkit-filter:blur(1px);
+    -moz-filter:blur(1px);
+    -ms-filter:blur(1px);
+    -o-filter:blur(1px);
+    filter: blur(1px); 
+    height:auto;
+    width:auto;
+
+    transform: none;
 }
-.switch .icon-off:after {
+
+.switch-door .icon-off:after {
   content: "";
   display: block;
   position: absolute;
@@ -236,13 +255,15 @@ span.buttonText {
     0 2px 5px rgba(255,255,255,0.1);
 }
 
-.abrindo-porta ~ label {
-    box-shadow:
+/*.switch-door input:checked ~ label {
+  box-shadow:
     inset 0 2px 3px rgba(255,255,255,0.13),
     0 5px 8px rgba(0,0,0,0.35),
     0 3px 10px 4px rgba(0,0,0,0.2);
-    color: #072eb8;
-}
+  color: #64BB46;
+} 
+
+}*/
 
 /*NAVBAR*/
 #user-photo {
@@ -251,7 +272,7 @@ span.buttonText {
     border-radius: 50%;
     display: block;
     margin: 15px;
-    //margin: 0 auto 10px auto;
+    /*margin: 0 auto 10px auto;*/
 }
  
 fundoHome{
@@ -292,16 +313,27 @@ pre {
     /*.navbar-collapse{
         background: linear-gradient(to right, #000 50%, #F00 50%);
     }*/
-    .footerSidebar{
-        //margin-top: 80%;
-        width: 100%;
-        bottom: 0;
-        position: absolute;
-    }
+
 
     #caixaUsuario{
         margin-top: -20px;
         background: #333;
     }
 
+}
+
+.btnabrirPorta{
+    position:absolute;
+    border-style: double;
+	top:50%;
+	left:50%;
+	margin-top:100px;
+	margin-left:-50px;
+}
+
+.footerSidebar{
+    //margin-top: 400px;
+    width: 100%;
+    //bottom: 0;
+    position: absolute;
 }
