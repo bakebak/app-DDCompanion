@@ -16,7 +16,8 @@
     <title>DD Companion</title>
 </head>
 <body style="display: none;" class="fundo">
-    <div data-bind="if: pagina() == 'loader', css: { 'loaderPage': loaderPage, }"></div>
+    <div data-bind="if: pagina() == 'loader', css: { 'loaderPage': loaderPage, }">
+    </div>
 
 
     <div data-bind="if: pagina() == 'login' || pagina() == 'modal'">
@@ -37,7 +38,8 @@
                 or <a data-bind="click: chamaPagina,  disable: abrindoPorta, css: { 'abrindo-porta': abrindoPorta, }">login</a> with user
             </div>
         </div>
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+       </div>
+        <!--<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -55,34 +57,39 @@
                 </div>
             </div>
         </div>
-     </div>
+     </div>-->
     <div data-bind="if: pagina() == 'home'" data-role="main" class="ui-content fundoHome">
         <nav>
             <div class="nav-wrapper #424242 grey darken-3">
-                <a href="#!" class="brand-logo"></a>
+                <a href="#!" class="brand-logo right">DD Companion</a>
                 <a href="#" data-activates="mobile-demo" data-bind="click: testeNav"class="button-collapse">
                     <i class="material-icons">menu</i>
                 </a>
                 <ul class="right hide-on-med-and-down">
                     <li>
                         <div class="userView">
-                            <a href="#!user"><img class="circle" src="css/img/user-anonimo.jpg"></a>
-                            <a href="#!name"><span class="black-text name">John Doe</span></a>
-                            <a href="#!email"><span class="black-text email">jdandturk@gmail.com</span></a>
+                            <img data-bind="attr: {src: photoUrl}" class="circle">
+                            <span  data-bind="value: name" class="black-text name"></span></a>
+                            <span  data-bind="value: email" class="black-text email"></span></a>
                         </div>
                     </li>
                     <li><div class="divider"></div></li>
                 </ul>
                 <ul class="side-nav" id="mobile-demo">
                     <li>
-                        <div class="userView">
-                            <a href="#!user"><img class="circle" src="css/img/user-anonimo.jpg"></a>
-                            <a href="#!name"><span class="black-text name">John Doe</span></a>
-                            <a href="#!email"><span class="black-text email">jdandturk@gmail.com</span></a>
+                        <div class="userView #424242 grey darken-3">
+                            <img data-bind="attr: {src: photoUrl}" class="circle">
+                            <span  data-bind="text: name" class="white-text name"></span></a>
+                            <span data-bind="text: email" class="white-text email"></span></a>
                         </div>
                     </li>
-                    <li><div class="divider"></div>
-                        <a class="footerSidebar" data-bind="click: disconnect">Desconectar</a>
+                    <li>
+                        <div class="divider"></div>
+                    </li>
+                    <li>
+                        <div class="footerSidebar">
+                            <a data-bind="click: disconnect">Desconectar</a>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -114,8 +121,13 @@
             var viewModel = new ViewModel();
             ko.applyBindings(viewModel);
             $('.fundo').css('display', 'block');
+            $(document).ready(function () {
+                $('.modal-trigger').leanModal();
+            });
+            $('.button-collapse').sideNav({
+                menuWidth: 900
+            });
             $('.button-collapse').sideNav('show');
-            $('.button-collapse').sideNav();
         </script>
 </body>
 </html>
