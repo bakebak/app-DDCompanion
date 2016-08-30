@@ -35,72 +35,76 @@
                 </div>
             </div>
             <div class="caixaLogin">
-                or <a data-bind="click: chamaPagina,  disable: abrindoPorta, css: { 'abrindo-porta': abrindoPorta, }">login</a> with user
+                or <a data-bind="click: chamaPagina">login</a> with user
             </div>
         </div>
-       </div>
-        <!--<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" data-bind="click: limparCampos" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Login com usuário</h4>
-                    </div>
-                    <div class="modal-body">
-                        <input data-bind="value: usuario, attr: {placeholder: textoUser}, css: { 'formulario': formulario}" />
-                        <input type="password" data-bind="value: password, attr: {placeholder: textoPassword}, css: { 'formulario': formulario}" />
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" data-bind="click: limparCampos" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                        <button type="button" data-bind="click: logarUsuario" class="btn btn-primary">Logar</button>
+    </div>
+
+    <div data-bind="if: pagina() == 'loginUsuario'">
+        <div class="container caixaInput">
+            <div class="designInput z-depth-3">
+                <div class="row">
+                    <div class="input-field">
+                        <input data-bind="value: usuario" id="email" type="email" maxlength="40"><i class="material-icons camposLogin" data-bind="click: limparUsuario">delete</i>
+                        <label data-icon="css/img/user-anonimo.jpg" for="email">Usuário</label>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="input-field">
+                        <input data-bind="value: password" id="password" type="password" maxlength="40"><i class="material-icons camposLogin" data-bind="click: limparSenha">delete</i>
+                        <label for="password">Senha</label>
+                    </div>
+                </div>
+                <div class="alinharBtn">
+                    <button class="btn waves-effect waves-light green accent-4 col s12 m4 l8" data-bind="click: logarUsuario">Logar</button>
+                    <button class="btn waves-effect waves-light green accent-4 col s12 m4 l8" data-bind="click: backHome">Voltar</button>
+                </div>  
             </div>
         </div>
-     </div>-->
+    </div>
+
     <div data-bind="if: pagina() == 'home'" data-role="main" class="ui-content fundoHome">
         <nav>
-            <div class="nav-wrapper #424242 grey darken-3">
+            <div class="nav-wrapper grey darken-3">
                 <a href="#!" class="brand-logo right">DD Companion</a>
-                <a href="#" data-activates="mobile-demo" data-bind="click: testeNav"class="button-collapse">
+                <a href="#" style="text-decoration:none" data-activates="mobile-demo" data-bind="click: configurarSidenav" class="button-collapse">
                     <i class="material-icons">menu</i>
                 </a>
                 <ul class="right hide-on-med-and-down">
-                    <li>
-                        <div class="userView">
-                            <img data-bind="attr: {src: photoUrl}" class="circle">
-                            <span  data-bind="value: name" class="black-text name"></span></a>
-                            <span  data-bind="value: email" class="black-text email"></span></a>
-                        </div>
-                    </li>
-                    <li><div class="divider"></div></li>
+                    <!--<li>
+                <div class="userView">
+                    <img data-bind="attr: {src: photoUrl}" class="circle">
+                    <span  data-bind="value: name" class="black-text name"></span></a>
+                    <span  data-bind="value: email" class="black-text email"></span></a>
+                </div>
+            </li>
+            <li><div class="divider"></div></li>-->
                 </ul>
                 <ul class="side-nav" id="mobile-demo">
                     <li>
-                        <div class="userView #424242 grey darken-3">
+                        <div class="userView grey darken-3">
                             <img data-bind="attr: {src: photoUrl}" class="circle">
-                            <span  data-bind="text: name" class="white-text name"></span></a>
+                            <span data-bind="text: name" class="white-text name"></span></a>
                             <span data-bind="text: email" class="white-text email"></span></a>
                         </div>
                     </li>
                     <li>
                         <div class="divider"></div>
                     </li>
-                    <li>
-                        <div class="footerSidebar">
-                            <a data-bind="click: disconnect">Desconectar</a>
-                        </div>
+                    <li class="teste">
+                        <a class="designDesconectar" data-bind="click: disconnect">Desconectar</a>
                     </li>
                 </ul>
             </div>
         </nav>
+        
         <div class="container side-collapse-container">
             <div class="row">
-                <div class="container">
+                <div class="container designAbrir">
                     <section class="main">
                         <div class="switch-door">
-                            <input id="btn-door" class="btn-door" data-bind="click: abrirPorta, disable: abrindoPorta, css: { 'abrindo-porta': abrindoPorta, }" type="checkbox">
-                            <label for="btn-door"><i class='icon-off'></i></label>
+                            <input id="btn-door" class="btn-door" data-bind="click: abrirPorta, css: { 'abrindo-porta': abrindoPorta, }" type="checkbox">
+                            <label><i class='icon-off'></i></label>
                         </div>
                     </section>
                 </div>
@@ -108,7 +112,7 @@
         </div>
 
         <!--<a class="btn-floating btn-large waves-effect waves-light #bdbdbd grey lighten-1 btnabrirPorta"><i class="material-icons">power_settings_new</i></a>-->
-   </div>
+     </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="scripts/platformOverrides.js"></script>
         <script type="text/javascript" src="scripts/jquery-1.9.1.min.js"></script>
@@ -121,13 +125,6 @@
             var viewModel = new ViewModel();
             ko.applyBindings(viewModel);
             $('.fundo').css('display', 'block');
-            $(document).ready(function () {
-                $('.modal-trigger').leanModal();
-            });
-            $('.button-collapse').sideNav({
-                menuWidth: 900
-            });
-            $('.button-collapse').sideNav('show');
         </script>
 </body>
 </html>

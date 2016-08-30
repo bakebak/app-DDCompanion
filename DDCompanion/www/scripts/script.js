@@ -7,6 +7,7 @@
     self.btnDesconectarDesabilitado = ko.observable(false);
     self.btnDesconectar = ko.observable(false);
     self.abrindoPorta = ko.observable(false);
+    self.btnAbrirDesabilitado = ko.observable(false);
     self.usuario = ko.observable('');
     self.password = ko.observable('');
     self.userName = ko.observable("visitante");
@@ -19,6 +20,7 @@
     self.email = ko.observable('');
     self.photoUrl = ko.observable('css/img/user-anonimo.jpg');
     var dadosUsuario = [];
+    var x = 0;
     var mensagem = {
         portaAberta: 'Porta desenergizada',
         portaFechada: 'Porta não foi desenergizada',
@@ -40,7 +42,8 @@
        appp.fetch(function (dadosUsuario) {
            self.name(dadosUsuario[0]);
            self.email(dadosUsuario[1]);
-           self.photoUrl(dadosUsuario[2]);
+           if (dadosUsuario[2] == null) { self.photoUrl('css/img/user-anonimo.jpg'); }
+           else { self.photoUrl(dadosUsuario[2]); }
        }, function (err) {
            console.log("Erro " + err);
        }, "dadosUsuario"
@@ -60,13 +63,12 @@
             self.loaderPage(false);
             self.pagina('home');
             $('.button-collapse').sideNav('show');
-            $('.button-collapse').sideNav();
             self.btnDesconectar(true);
             self.btnLoginDesabilitado(true);
         }
        else {
-            self.loaderPage(false);
-            self.pagina('login');
+           self.loaderPage(false);
+           self.pagina('login');
         }
     }
 
@@ -74,6 +76,7 @@
         console.log("desc");
         self.btnDesconectarDesabilitado(true);
         self.btnLoginDesabilitado(false);
+        //self.loaderPage(true);
         var GooglePlus = window.plugins.googleplus;
         trySilentLogin();
         window.plugins.googleplus.disconnect(
@@ -106,23 +109,24 @@
             function (obj) {
             });
     }
+
     function removerDados() {
         var appp = plugins.appPreferences;
         appp.remove(function (value) {
             self.pagina('login');
             $('.button-collapse').sideNav('hide');
-            $('.button-collapse').sideNav();
             self.limparCampos();
         }, function (err) {
         }, "usuario");
 
         appp.remove(function (valueToken) {
+            self.loaderPage(false);
         }, function (err) {
+            console.log("Aolhaeoie");
         }, "token");
     }
 
     self.login = function () {
-        console.log("AQpetgg");
         self.btnDesconectarDesabilitado(false);
         self.btnLoginDesabilitado(true);
         var GooglePlus = window.plugins.googleplus;
@@ -134,7 +138,7 @@
             },
             function (result) {
                 var url = 'http://porta.digitaldesk.com.br/autenticar/google?token=' + result.serverAuthCode;
-                console.log(result.serverAuthCode);
+                self.loaderPage(true);
                 validarEmail(url, result);
             },
             function (msg) {
@@ -143,8 +147,8 @@
         );
     }
 
+
     function validarEmail(url, result) {
-        self.loaderPage(true);
         $.post(url, function (response) {
             self.status(response.status);
             if (self.status() == true) {
@@ -153,7 +157,7 @@
                         self.token(response.token);
                         acessoPermitido(result);
                     }
-                    else if (self.pagina() == 'modal') {
+                    else if (self.pagina() == 'loginUsuario') {
                         self.token(response.token);
                         var dadosUsuario = { displayName: self.usuario() };
                         acessoPermitido(dadosUsuario);
@@ -162,8 +166,9 @@
                else if (response.token == null) { mensagemPortaAberta(mensagem.portaAberta); }
             }
             else if (self.status() == false) {
-                if (self.pagina() == 'login' || self.pagina() == 'modal') {
-                    acessoNegado(mensagem.semAcesso);
+                if (self.pagina() == 'login' || self.pagina() == 'loginUsuario') {
+                    var pagina = self.pagina();
+                    acessoNegado(mensagem.semAcesso, pagina);
                 }
                 else if (self.pagina() == 'home') {
                     removerDesativado(mensagem.portaFechada);
@@ -178,12 +183,14 @@
     function mensagemPortaAberta(textoPorta) {
         self.loaderPage(false);
         alert(textoPorta);
+        self.abrindoPorta(false);
         setTimeout(function () {
-            self.abrindoPorta(false);
+            self.btnAbrirDesabilitado(false);
         }, 3000);
         self.pagina('home');
-        $('.button-collapse').sideNav('show');
-        $('.button-collapse').sideNav();
+        //self.configurarSidenav();
+        //$('.button-collapse').sideNav('show');
+        //$('.button-collapse').sideNav();
     }
 
     function removerDesativado(textoPorta) {
@@ -194,9 +201,10 @@
         self.disconnect();
     }
 
-    function acessoNegado(texto) {
+    function acessoNegado(texto, pagina) {
         self.loaderPage(false);
-        self.pagina('login');
+        if (self.pagina() == 'login') { self.pagina('login'); }
+        else { self.pagina('loginUsuario'); }
         alert(texto);
         self.disconnect();
         self.btnLoginDesabilitado(false);
@@ -206,7 +214,6 @@
         self.loaderPage(false);
         self.pagina('home');
         $('.button-collapse').sideNav('show');
-        $('.button-collapse').sideNav();
         self.btnDesconectar(true);
         self.btnDesconectarDesabilitado(false);
         //self.userName(result.displayName);
@@ -214,7 +221,8 @@
         salvarUsuario(result);
         self.name(dadosUsuario[0]);
         self.email(dadosUsuario[1]);
-        self.photoUrl(dadosUsuario[2]);
+        if (dadosUsuario[2] == null) { self.photoUrl('css/img/user-anonimo.jpg'); }
+        else { self.photoUrl(dadosUsuario[2]); }
     }
 
     function salvarUsuario(result) {
@@ -240,16 +248,21 @@
     }
 
     self.abrirPorta = function () {
-        alert("abrirPorta");
+        if (self.btnAbrirDesabilitado()) return;
+
+        self.abrindoPorta(true);
+        self.btnAbrirDesabilitado(true);
         var url = "http://porta.digitaldesk.com.br/abrirporta?token=" + self.token();
         //validarEmail(url);
-        //self.abrindoPorta(true);
+
+        window.setTimeout(function () {
+            self.btnAbrirDesabilitado(false);
+        }, 3000);
     }
 
     self.chamaPagina = function () {
         self.formulario(true);
-        self.pagina('modal');
-        $('#myModal').modal("show");
+        self.pagina('loginUsuario');
     }
 
     self.logarUsuario = function () {
@@ -270,7 +283,26 @@
         self.password('');
     }
 
-    self.testeNav = function () {
-        console.log("Apertado navbar");
+    self.limparSenha = function () {
+        self.password('');
+    }
+
+    self.limparUsuario = function () {
+        self.usuario('');
+    }
+
+    self.backHome = function () {
+        self.pagina('login');
+        self.limparCampos();
+    }
+
+    self.configurarSidenav = function () {
+        console.log("apertado");
+        if (x == 0) {
+            $('.button-collapse').sideNav({
+                menuWidth: 245 // Default is 240
+            });
+            x++;
+        }
     }
 }
