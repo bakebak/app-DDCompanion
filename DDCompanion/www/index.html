@@ -20,7 +20,7 @@
     </div>
 
 
-    <div data-bind="if: pagina() == 'login' || pagina() == 'modal'">
+    <div data-bind="if: pagina() == 'login'">
         <div class="container">
             <div class="logo">
                 <img src="css/img/oie_transparent.png" />
@@ -56,8 +56,10 @@
                     </div>
                 </div>
                 <div class="alinharBtn">
-                    <button class="btn waves-effect waves-light green accent-4 col s12 m4 l8" data-bind="click: logarUsuario">Logar</button>
-                    <button class="btn waves-effect waves-light green accent-4 col s12 m4 l8" data-bind="click: backHome">Voltar</button>
+                    <a class="waves-effect waves-light btn green accent-4 col s12 m4 l8" data-bind="click: logarUsuario"">Logar</a>
+                    <a class="waves-effect waves-light btn green accent-4 col s12 m4 l8" data-bind="click: backHome">Voltar</a>
+                    <!--<button class="waves-effect waves-light btn green accent-4 col s12 m4 l8" data-bind="click: logarUsuario">Logar</button>
+                    <button class="waves-effect waves-light btn green accent-4 col s12 m4 l8" data-bind="click: backHome">Voltar</button>-->
                 </div>  
             </div>
         </div>
