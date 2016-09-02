@@ -28,14 +28,14 @@
             <div class="titulo">
                 <h3>DigitalDesk Companion</h3>
             </div>
-            <div data-bind="click: login, disable: btnLoginDesabilitado">
+            <div data-bind="click: logarGoogle, disable: btnLoginDesabilitado">
                 <div id="customBtn">
                     <span class="icon"></span>
                     <span class="buttonText">Continue</span>
                 </div>
             </div>
             <div class="caixaLogin">
-                or <a data-bind="click: chamaPagina">login</a> with user
+                or <a data-bind="click: chamarLoginUsuario">login</a> with user
             </div>
         </div>
     </div>
@@ -51,13 +51,13 @@
                 </div>
                 <div class="row">
                     <div class="input-field">
-                        <input data-bind="value: password" id="password" type="password" maxlength="40"><i class="material-icons camposLogin" data-bind="click: limparSenha">delete</i>
+                        <input data-bind="value: senha" id="password" type="password" maxlength="40"><i class="material-icons camposLogin" data-bind="click: limparSenha">delete</i>
                         <label for="password">Senha</label>
                     </div>
                 </div>
                 <div class="alinharBtn">
                     <a class="waves-effect waves-light btn green accent-4 col s12 m4 l8" data-bind="click: logarUsuario"">Logar</a>
-                    <a class="waves-effect waves-light btn green accent-4 col s12 m4 l8" data-bind="click: backHome">Voltar</a>
+                    <a class="waves-effect waves-light btn green accent-4 col s12 m4 l8" data-bind="click: voltarTelaLogin">Voltar</a>
                     <!--<button class="waves-effect waves-light btn green accent-4 col s12 m4 l8" data-bind="click: logarUsuario">Logar</button>
                     <button class="waves-effect waves-light btn green accent-4 col s12 m4 l8" data-bind="click: backHome">Voltar</button>-->
                 </div>  
@@ -68,7 +68,7 @@
     <div data-bind="if: pagina() == 'home'" data-role="main" class="ui-content fundoHome">
         <nav>
             <div class="nav-wrapper grey darken-3">
-                <a href="#!" class="brand-logo right">DD Companion</a>
+                <a class="brand-logo right">DD Companion</a>
                 <a href="#" style="text-decoration:none" data-activates="mobile-demo" data-bind="click: configurarSidenav" class="button-collapse">
                     <i class="material-icons">menu</i>
                 </a>
@@ -85,16 +85,16 @@
                 <ul class="side-nav" id="mobile-demo">
                     <li>
                         <div class="userView grey darken-3">
-                            <img data-bind="attr: {src: photoUrl}" class="circle">
-                            <span data-bind="text: name" class="white-text name"></span></a>
+                            <img data-bind="attr: {src: fotoUrl}" class="circle">
+                            <span data-bind="text: nome" class="white-text name"></span></a>
                             <span data-bind="text: email" class="white-text email"></span></a>
                         </div>
                     </li>
                     <li>
                         <div class="divider"></div>
                     </li>
-                    <li class="teste">
-                        <a class="designDesconectar" data-bind="click: disconnect">Desconectar</a>
+                    <li>
+                        <a data-bind="click: desconectar, disable: btnDesconectarDesabilitado">Desconectar</a>
                     </li>
                 </ul>
             </div>

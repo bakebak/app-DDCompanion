@@ -47,8 +47,7 @@
        appp.fetch(function (dadosUsuario) {
            self.nome(dadosUsuario[0]);
            self.email(dadosUsuario[1]);
-           if (dadosUsuario[2] == null) { self.fotoUrl('css/img/user-anonimo.jpg'); }
-           else { self.fotoUrl(dadosUsuario[2]); }
+           self.fotoUrl(dadosUsuario[2]);
        }, function (err) {
            console.log("Erro " + err);
        }, "dadosUsuario"
@@ -73,7 +72,7 @@
        else { self.pagina('login'); }
    }
 
-   self.login = function () {
+   self.logarGoogle = function () {
        self.btnDesconectarDesabilitado(false);
        self.btnLoginDesabilitado(true);
        var GooglePlus = window.plugins.googleplus;
@@ -94,61 +93,105 @@
        );
    }
 
+   self.chamarLoginUsuario = function () { self.pagina('loginUsuario');}
+
+   self.voltarTelaLogin = function () {
+       self.pagina('login');
+       self.limparUsuario();
+       self.limparSenha();
+   }
+
+   self.logarUsuario = function () {
+       if (self.usuario() == "" || self.senha() == "") { alert(mensagem.campoVazio); }
+       else if (self.usuario() == "" && self.senha() == "") { alert(mensagem.campoVazio); }
+       if (self.usuario() != "" && self.senha() != "") {
+           var url = 'http://porta.digitaldesk.com.br/autenticar/usuario?key=' + self.senha() + '&user=' + self.usuario();
+           validarUsuario(url);
+       }
+   }
+
    function validarUsuario(url, result) {
-       $.post(url, function (response) {
-           self.status(response.status);
-           if (self.status() == true) {
-               if (response.token != null) {
-                   if (self.pagina() == 'login') {
-                       self.token(response.token);
-                       acessoPermitido(result);
-                   }
-                   else if (self.pagina() == 'loginUsuario') {
-                       self.token(response.token);
-                       var dadosUsuario = { displayName: self.usuario() };
-                       acessoPermitido(dadosUsuario);
-                   }
-               }
-               else if (response.token == null) { mensagemPortaAberta(mensagem.portaAberta); }
-           }
-           else if (self.status() == false) {
-               if (self.pagina() == 'login' || self.pagina() == 'loginUsuario') {
-                   var pagina = self.pagina();
-                   acessoNegado(mensagem.semAcesso, pagina);
-               }
-               else if (self.pagina() == 'home') {
-                   removerDesativado(mensagem.portaFechada);
-               }
-           }
-       })
+        $.post(url, function (response) {
+            self.status(response.status);
+                if (self.status() == true) {
+                    if (response.token != null) {
+                        self.token(response.token);
+                        if (self.pagina() == 'login') {
+                            acessoPermitido(result);
+                        }
+                        else if (self.pagina() == 'loginUsuario') {
+                            var dadosUsuario = { 
+                                displayName: self.usuario(), 
+                                imageUrl: 'css/img/user-anonimo.jpg'
+                            }
+                            acessoPermitido(dadosUsuario);
+                        }
+                    }       
+                }
+                else if (self.status() == false) {
+                        var pagina = self.pagina();
+                        acessoNegado(mensagem.semAcesso, pagina);
+                }
+        })
        .fail(function () {
            removerDesativado(mensagem.erro);
        });
    }
 
-    self.disconnect = function () {
+   function acessoNegado(texto, pagina) {
+       self.loaderPage(false);
+       if (self.pagina() == 'login') { self.pagina('login'); }
+       else { self.pagina('loginUsuario'); }
+       alert(texto);
+       self.desconectar();
+       self.btnLoginDesabilitado(false);
+   }
+
+   function acessoPermitido(result) {
+       self.loaderPage(false);
+       self.pagina('home');
+       $('.button-collapse').sideNav('show');
+       self.btnDesconectarDesabilitado(false);
+       dadosUsuario = [result.displayName, result.email, result.imageUrl];
+       salvarUsuario(result);
+       self.nome(dadosUsuario[0]);
+       self.email(dadosUsuario[1]);
+       self.fotoUrl(dadosUsuario[2]);
+   }
+
+   function salvarUsuario(result) {
+       var appp = plugins.appPreferences;
+       appp.store(function (value) {
+           console.log("Dados salvos:  " + value);
+       }, function (err) {
+           console.log("Erro " + err);
+       }, "usuario", result.displayName);
+
+       appp.store(function (dadosUsuario) {
+           console.log("Dados salvos:  " + dadosUsuario);
+       }, function (err) {
+           console.log("Erro " + err);
+       }, "dadosUsuario", dadosUsuario);
+
+
+       appp.store(function (valueToken) {
+           console.log("Token salvo: " + valueToken);
+       }, function (err) {
+           console.log("Erro " + err);
+       }, "token", self.token());
+   }
+
+    self.desconectar = function () {
         self.btnDesconectarDesabilitado(true);
         self.btnLoginDesabilitado(false);
-        //self.loaderPage(true);
         var GooglePlus = window.plugins.googleplus;
         trySilentLogin();
         window.plugins.googleplus.disconnect(
         function (result) {
             removerDados();
         }, function (msg) {
-            logout();
+            deslogar();
         });
-    }
-
-    function logout() {
-        window.plugins.googleplus.logout(
-            function (msg) {
-                removerDados();
-            },
-            function (error) {
-                removerDados();
-            }
-        );
     }
 
     function trySilentLogin() {
@@ -161,6 +204,17 @@
             },
             function (obj) {
             });
+    }
+
+    function deslogar() {
+        window.plugins.googleplus.logout(
+            function (msg) {
+                removerDados();
+            },
+            function (error) {
+                removerDados();
+            }
+        );
     }
 
     function removerDados() {
@@ -180,107 +234,48 @@
         }, "token");
     }
 
+    self.abrirPorta = function () {
+        if (self.btnAbrirDesabilitado()) return;
+        //self.abrindoPorta(true);
+        self.btnAbrirDesabilitado(true);
+        var url = "http://porta.digitaldesk.com.br/abrirporta?token=" + self.token();
+        validarToken(url);
+
+        window.setTimeout(function () {
+            self.btnAbrirDesabilitado(false);
+        }, 3000);
+    }
    
-
-
-    
+    function validarToken(url){
+        $.post(url, function (response) {
+            self.status(response.status);
+            if (self.status() == true) {
+                if (response.token == null) {
+                    mensagemPortaAberta(mensagem.portaAberta);
+                }
+            }
+            else if (self.status() == false) {
+                removerDesativado(mensagem.portaFechada);
+            }
+        })
+        .fail(function () {
+            removerDesativado(mensagem.erro);
+        });
+    }
 
     function mensagemPortaAberta(textoPorta) {
         self.loaderPage(false);
         alert(textoPorta);
         self.abrindoPorta(false);
         self.pagina('home');
-        //self.configurarSidenav();
-        //$('.button-collapse').sideNav('show');
-        //$('.button-collapse').sideNav();
     }
 
     function removerDesativado(textoPorta) {
         self.loaderPage(false);
-        self.abrindoPorta(false);
+        //self.abrindoPorta(false);
         alert(textoPorta);
         self.btnLoginDesabilitado(false);
-        self.disconnect();
-    }
-
-    function acessoNegado(texto, pagina) {
-        self.loaderPage(false);
-        if (self.pagina() == 'login') { self.pagina('login'); }
-        else { self.pagina('loginUsuario'); }
-        alert(texto);
-        self.disconnect();
-        self.btnLoginDesabilitado(false);
-    }
-    function acessoPermitido(result) {
-        //$('#myModal').modal("hide");
-        self.loaderPage(false);
-        self.pagina('home');
-        $('.button-collapse').sideNav('show');
-        self.btnDesconectarDesabilitado(false);
-        //self.userName(result.displayName);
-        dadosUsuario = [result.displayName, result.email, result.imageUrl];
-        salvarUsuario(result);
-        self.nome(dadosUsuario[0]);
-        self.email(dadosUsuario[1]);
-        if (dadosUsuario[2] == null) { self.fotoUrl('css/img/user-anonimo.jpg'); }
-        else { self.fotoUrl(dadosUsuario[2]); }
-    }
-
-    function salvarUsuario(result) {
-        var appp = plugins.appPreferences;
-        appp.store(function (value) {
-            console.log("Dados salvos:  " + value);
-        }, function (err) {
-            console.log("Erro " + err);
-        }, "usuario", result.displayName);
-
-        appp.store(function (dadosUsuario) {
-            console.log("Dados salvos:  " + dadosUsuario);
-        }, function (err) {
-            console.log("Erro " + err);
-        }, "dadosUsuario", dadosUsuario);
-
-
-        appp.store(function (valueToken) {
-            console.log("Token salvo: " + valueToken);
-        }, function (err) {
-            console.log("Erro " + err);
-        }, "token", self.token());
-    }
-
-    self.abrirPorta = function () {
-        if (self.btnAbrirDesabilitado()) return;
-        //self.abrindoPorta(true);
-        self.btnAbrirDesabilitado(true);
-        var url = "http://porta.digitaldesk.com.br/abrirporta?token=" + self.token();
-        validarUsuario(url);
-
-        window.setTimeout(function () {
-            self.btnAbrirDesabilitado(false);
-        }, 3000);
-    }
-
-    self.chamaPagina = function () {
-        self.pagina('loginUsuario');
-    }
-
-    self.logarUsuario = function () {
-        if (self.usuario() == "" || self.password() == "") {
-            alert(mensagem.campoVazio);
-        }
-        else if (self.usuario() == "" && self.password() == "") {
-            alert(mensagem.campoVazio);
-        }
-        if (self.usuario() != "" && self.password() != "") {
-            var url = 'http://porta.digitaldesk.com.br/autenticar/usuario?key=' + self.password() + '&user=' + self.usuario();
-            validarUsuario(url);
-        }
-    }
-}
-
-    self.backHome = function () {
-        self.pagina('login');
-        self.limparCampos();
+        self.desconectar();
     }
 
     self.configurarSidenav = function () {
@@ -292,11 +287,10 @@
         }
     }
 
-/*LIMPAR CAMPOS*/
     self.limparUsuario = function () {
         self.usuario('');
     }
     self.limparSenha = function () {
-        self.password('');
+        self.senha('');
     }
 }
