@@ -1,74 +1,115 @@
 ﻿<!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title></title>
-        <meta name="description" content="" />
-        <meta name="keywords" content="" />
-        <meta name="author" content="" />
-        <link rel="shortcut icon" href="">
-        <meta name="format-detection" content="telephone=no">
-        <meta name="msapplication-tap-highlight" content="no">
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-        <link rel="stylesheet" type="text/css" href="css/index.css">
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css" />
-        <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
-        <title>DD Companion</title>
-    </head>
-    <body style="display: none;" class="fundo">
-        <div data-bind="if: pagina() == 'loader', css: { 'loaderPage': loaderPage, }"></div>
-        <div data-bind="if: pagina() == 'login'" data-role="main" class="ui-content">
-            <div class="caixa">
-                <button class="botao ui-btn btn btn-primary btn-lg" data-bind="click: login, disable: btnLoginDesabilitado">Login</button>
-                <button class="botao ui-btn btn btn-primary btn-lg" data-bind="click: chamaPagina">Show</button>
-                <!--<input data-bind="click: teste" type="button">
-                <label><i class='icon-cog' aria-hidden="true"></i></label>
-                <input type="checkbox" data-bind="checked: manterConectado" /> Manter-me conectado-->
-            </div>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+    <script src="https://apis.google.com/js/api:client.js"></script>
+    <title>DD Companion</title>
+</head>
+<body style="display: none;" class="fundo">
+    <div data-bind="if: pagina() == 'loader', css: { 'loaderPage': loaderPage }">
+    </div>
+
+
+    <div data-bind="if: pagina() == 'login',  css: { 'caixaGoogle': caixaGoogle }">
+        <div class="container">
+            <div class="logo-home"></div>
+        </div>
+        <div id="customBtn" data-bind="click: logarGoogle, disable: btnLoginDesabilitado">
+            <span class="icon"></span>
+            <span class="buttonText">Continue</span>
         </div>
 
-        <div data-bind="if: pagina() == 'modal'" data-role="main" class="ui-content">
-            <input data-bind="value: user" />
-            <input data-bind="value: password" />
-            <button class="botao ui-btn btn btn-primary btn-lg" data-bind="click: logarUsuario">Logar</button>
+        <div class="caixaLogin">
+            or <a data-bind="click: chamarLoginUsuario" style="color: #4db81a">login</a> with user
         </div>
+    </div>
 
-        <div data-bind="if: pagina() == 'home'" data-role="main" class="ui-content">
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="#"><span data-bind="text: userName"></span></a>
-                    </div>
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav">
-                        <button class="botao btn btn-default" data-bind="click: disconnect, disable: btnDesconectarDesabilitado, visible: btnDesconectar () === true">Desconectar</button>
-                        </ul>
+    <div data-bind="if: pagina() == 'loginUsuario'">
+        <div class="container caixaInput">
+            <div class="designInput">
+                <div class="row">
+                    <div class="input-field">
+                        <input data-bind="value: usuario" id="email" type="email" maxlength="40"><i class="material-icons camposLogin" data-bind="click: limparUsuario">close</i>
+                        <label data-icon="css/img/user-anonimo.jpg" for="email">Usuário</label>
                     </div>
                 </div>
-            </nav>
-            <div class="container">
-                <section class="main">
-                    <div class="switch">
-                        <input data-bind="click: abrirPorta, disable: abrindoPorta, css: { 'abrindo-porta': abrindoPorta, }" type="checkbox">
-                        <label><i class='icon-off'></i></label>
+                <div class="row">
+                    <div class="input-field">
+                        <input data-bind="value: senha" id="password" type="password" maxlength="40"><i class="material-icons camposLogin" data-bind="click: limparSenha">close</i>
+                        <label for="password">Senha</label>
                     </div>
-                </section>
+                </div>
+                <a class="waves-effect waves-light btn grey lighten-1 col s12 m4 l8" style="width: 115px;" data-bind="click: voltarTelaLogin">Voltar</a>
+                <a class="waves-effect waves-light btn green accent-4 col s12 m4 l8" style="float: right; width: 115px;" data-bind="click: logarUsuario" ">Logar</a>
+                <!--<button class="waves-effect waves-light btn green accent-4 col s12 m4 l8" data-bind="click: logarUsuario">Logar</button>
+    <button class="waves-effect waves-light btn green accent-4 col s12 m4 l8" data-bind="click: backHome">Voltar</button>-->
             </div>
         </div>
+    </div>
+
+    <div data-bind="if: pagina() == 'home'" data-role="main" class="ui-content fundoHome">
+        <nav>
+            <div class="nav-wrapper grey darken-3">
+                <a class="brand-logo left" style="padding-left: 30px">DD Companion</a>
+                <a href="#" style="text-decoration:none" data-activates="mobile-demo" data-bind="click: configurarSidenav" class="button-collapse">
+                    <i class="material-icons">menu</i>
+                </a>
+                <ul class="right hide-on-med-and-down">
+                    <!--<li>
+                <div class="userView">
+                    <img data-bind="attr: {src: photoUrl}" class="circle">
+                    <span  data-bind="value: name" class="black-text name"></span></a>
+                    <span  data-bind="value: email" class="black-text email"></span></a>
+                </div>
+            </li>
+            <li><div class="divider"></div></li>-->
+                </ul>
+                <ul class="side-nav" id="mobile-demo">
+                    <li>
+                        <div class="userView grey darken-3">
+                            <img data-bind="attr: {src: fotoUrl}" class="circle">
+                            <span data-bind="text: nome" class="white-text name"></span></a>
+                            <span data-bind="text: email" class="white-text email"></span></a>
+                        </div>
+                    </li>
+                    <li>
+                        <a data-bind="click: desconectar, disable: btnDesconectarDesabilitado">Desconectar</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        
+        <div class="container side-collapse-container">
+            <div class="row">
+                <div class="container designAbrir">
+                    <section class="main">
+                        <div class="switch-door">
+                            <input id="btn-door" class="btn-door" data-bind="click: abrirPorta, css: { 'abrindo-porta': abrindoPorta, }" type="checkbox">
+                            <label><i class='icon-off'></i></label>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <!--<a class="btn-floating btn-large waves-effect waves-light #bdbdbd grey lighten-1 btnabrirPorta"><i class="material-icons">power_settings_new</i></a>-->
+     </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="scripts/platformOverrides.js"></script>
         <script type="text/javascript" src="scripts/jquery-1.9.1.min.js"></script>
         <script type="text/javascript" src="scripts/knockout-3.4.0.js"></script>
         <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
         <script type="text/javascript" src="scripts/index.js"></script>
         <script type="text/javascript" src="scripts/script.js"></script>
         <script>
@@ -76,5 +117,5 @@
             ko.applyBindings(viewModel);
             $('.fundo').css('display', 'block');
         </script>
-    </body>
+</body>
 </html>

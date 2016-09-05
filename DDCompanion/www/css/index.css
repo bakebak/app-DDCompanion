@@ -1,54 +1,107 @@
-.fundo {
-    background: #f7f2f6;
+html{
+    height: 100%;
 }
 
-.botao{
-    width: 100%;
+body{
+    height: 100%;
+}
+/*TELA LOADER*/
+.loaderPage {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: url('img/zAD2y29.gif') 50% 50% no-repeat white;
 }
 
-#titulo{
-    color: white;
-}
-.caixa{
-    text-align: center;
-    margin: 10px;
+.fundo { /*body*/
+    background: #FFF;
 }
 
-.user {
-    padding:40px 5px;
-    background: #FFFFFF;
-    border-radius: 4px;
-    box-shadow: 0 0px 5px 0 rgba(0, 0, 0, 0.16), 0 0px 10px 0 rgba(0, 0, 0, 0.12);
-    width: 90%;
-    display: block;
+/*TELA LOGIN*/
+.caixaGoogle{
+    background: #4db81a;
+    height: 280px;
     margin: 0 auto;
 }
- 
-#user-photo {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    display: block;
-    margin: 0 auto 10px auto;
+
+.logo-home {
+    width: 164px;
+    height: 300px;
+    background: url('img/home_logo.png') no-repeat;
+    background-size: 100%;
+    margin: 20px auto;
 }
- 
-h1 {
-    display: block;
-    margin: 0 auto;
+
+.caixaLogin{
+    /*bottom: 12%;*/
+    position: relative;
     text-align: center;
-    font-weight: lighter;
-    color: white;
+    bottom: -50%;
 }
- 
-#user-name {
-    color: #0066AA;
+
+.caixaInput{
+    top:50%;
+    left: 50%;
+    padding-top: 8%;
+}
+
+.designInput{
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+i.material-icons.camposLogin{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+/*BOTÃO GOOGLE*/
+#customBtn {
+    position: relative;
+    display: inline-block;
+    background: white;
+    color: #444;
+    width: 250px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    box-shadow: 0px 3px 4px rgba(128, 128, 128, 0.38);
+    white-space: nowrap;
+    left: 50%;
+    margin-left: -125px;
+}
+
+span.label {
+    font-family: serif;
+    font-weight: normal;
+}
+span.icon {
+    background: url('img/g-logo.png') transparent no-repeat;
+    display: inline-block;
+    vertical-align: middle;
+    width: 42px;
+    height: 42px;
+    margin-left: 6px;
+    margin-top: 6px;
+}
+
+span.buttonText {
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 42px;
+    padding-right: 42px;
+    font-size: 14px;
     font-weight: bold;
+    /* Use the Roboto font that is loaded in the <head> */
+    font-family: 'Roboto', sans-serif;
 }
 
-botao{
-    text-align: center;
-    padding: 20px;
-}
+/*TELA HOME*/
 
 *,
 *:after,
@@ -60,19 +113,23 @@ botao{
   margin: 0;
 }
 
-.switch {
-  margin: 50px auto;
+.switch-door {
+  margin: 50% auto;
   position: relative;
 }
 
-.switch label {
+.switch-door [type="checkbox"]+label {
   width: 100%;
   height: 100%;
   position: relative;
   display: block;
+  padding:0;
+  line-height: inherit;
+  font-size: 70px;
+
 }
 
-.switch input {
+.switch-door input {
   top: 0; 
   right: 0; 
   bottom: 0; 
@@ -85,12 +142,16 @@ botao{
   cursor: pointer;
 }
 
-.switch {
+.switch-door [type="checkbox"]:not(:checked), [type="checkbox"]:checked {        
+    left:inherit;
+}
+
+.switch-door  {
   width: 150px;
   height: 150px;
 }
 
-.switch label {
+.switch-door [type="checkbox"]+label {
   border-radius: 50%;
   background: #b2ac9e;
   background: -moz-linear-gradient(#f7f2f6, #b2ac9e);
@@ -120,7 +181,7 @@ botao{
   z-index: -1;
 }
 
-.switch label:after {
+.switch-door [type="checkbox"]+label:before{
   content: ""; 
   position: absolute;
   left: -20px;
@@ -129,39 +190,34 @@ botao{
   bottom: -20px;
   z-index: -2;
   border-radius: inherit;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.1),
-    0 1px 2px rgba(0,0,0,0.3),
-    0 0 10px rgba(0,0,0,0.15);
-  
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.1),0 1px 2px rgba(0,0,0,0.3),0 0 10px rgba(0,0,0,0.15);
+  height:auto;
+  width: auto;
+  border: none;
 }
 
-.switch label:before {
-  content: ""; 
-  position: absolute;
-  left: -10px;
-  right: -10px;
-  top: -10px;
-  bottom: -10px;
-  z-index: -1;
-  border-radius: inherit;
-  box-shadow: inset 0 10px 10px rgba(0,0,0,0.13); 
-  -webkit-filter:blur(1px);
-  -moz-filter:blur(1px);
-  -ms-filter:blur(1px);
-  -o-filter:blur(1px);
-  filter: blur(1px); 
+.switch-door [type="checkbox"]:not(.filled-in) + label:after {
+    content: ""; 
+    position: absolute;
+    left: -10px;
+    right: -10px;
+    top: -10px;
+    bottom: -10px;
+    z-index: -1;
+    border-radius: inherit;
+    box-shadow: inset 0 10px 10px rgba(0,0,0,0.13); 
+    -webkit-filter:blur(1px);
+    -moz-filter:blur(1px);
+    -ms-filter:blur(1px);
+    -o-filter:blur(1px);
+    filter: blur(1px); 
+    height:auto;
+    width:auto;
+
+    transform: none;
 }
 
-/*.switch input:checked ~ label {
-  box-shadow:
-    inset 0 2px 3px rgba(255,255,255,0.13),
-    0 5px 8px rgba(0,0,0,0.35),
-    0 3px 10px 4px rgba(0,0,0,0.2);
-  color: #072eb8;
-}*/
-
-.switch .icon-off:after {
+.switch-door .icon-off:after {
   content: "";
   display: block;
   position: absolute;
@@ -184,21 +240,27 @@ botao{
     0 2px 5px rgba(255,255,255,0.1);
 }
 
-.abrindo-porta ~ label {
-    box-shadow:
+
+.switch-door input.abrindo-porta ~ label {
+  box-shadow:
     inset 0 2px 3px rgba(255,255,255,0.13),
     0 5px 8px rgba(0,0,0,0.35),
     0 3px 10px 4px rgba(0,0,0,0.2);
-    color: #072eb8;
+  color: #64BB46;
 }
 
-.loaderPage {
-	position: fixed;
-	left: 0px;
-	top: 0px;
-	width: 100%;
-	height: 100%;
-	z-index: 9999;
-	background: url('img/zAD2y29.gif') 50% 50% no-repeat white;
-}
+@media only screen and (min-width: 100px) and (max-width:340px) {
+    .logo-home {
+        width: 120px;
+        height: 220px;
+    }
 
+    .caixaGoogle{
+        height: 210px;
+    }
+
+    .caixaLogin{
+         bottom: -50%;
+    }
+   
+}

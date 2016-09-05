@@ -102,4 +102,5 @@
   </plugin>
   <preference name="android-minSdkVersion" value="15" />
   <preference name="android-targetSdkVersion" value="21" />
+  <preference name="orientation" value="portrait" />
 </widget>
