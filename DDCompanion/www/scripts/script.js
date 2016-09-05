@@ -1,7 +1,7 @@
 ﻿function ViewModel() {
     var self = this;
-    self.pagina = ko.observable('loader');
-    self.loaderPage = ko.observable(true);
+    self.pagina = ko.observable('login');
+    self.loaderPage = ko.observable(false);
 
     /*LOGIN*/
     // self.manterConectado = ko.observable(true);
@@ -13,6 +13,7 @@
     self.senha = ko.observable('');
 
     /*LOGIN COM GOOGLE*/
+    self.caixaGoogle = ko.observable(false);
     self.token = ko.observable('');
     self.status = ko.observable('');
     self.nome = ko.observable('');
@@ -69,7 +70,7 @@
             $('.button-collapse').sideNav('show');
             self.btnLoginDesabilitado(true);
         }
-       else { self.pagina('login'); }
+       else { self.pagina('login'); self.caixaGoogle(true); }
    }
 
    self.logarGoogle = function () {
@@ -93,10 +94,11 @@
        );
    }
 
-   self.chamarLoginUsuario = function () { self.pagina('loginUsuario');}
+   self.chamarLoginUsuario = function () { self.pagina('loginUsuario'); self.caixaGoogle(false);}
 
    self.voltarTelaLogin = function () {
        self.pagina('login');
+       self.caixaGoogle(true);
        self.limparUsuario();
        self.limparSenha();
    }
@@ -140,8 +142,8 @@
 
    function acessoNegado(texto, pagina) {
        self.loaderPage(false);
-       if (self.pagina() == 'login') { self.pagina('login'); }
-       else { self.pagina('loginUsuario'); }
+       if (self.pagina() == 'login') { self.pagina('login'); self.caixaGoogle(true);}
+       else { self.pagina('loginUsuario'); self.caixaGoogle(false); }
        alert(texto);
        self.desconectar();
        self.btnLoginDesabilitado(false);
@@ -150,6 +152,7 @@
    function acessoPermitido(result) {
        self.loaderPage(false);
        self.pagina('home');
+       self.caixaGoogle(false);
        $('.button-collapse').sideNav('show');
        self.btnDesconectarDesabilitado(false);
        dadosUsuario = [result.displayName, result.email, result.imageUrl];
@@ -221,6 +224,7 @@
         var appp = plugins.appPreferences;
         appp.remove(function (value) {
             self.pagina('login');
+            self.caixaGoogle(true);
             $('.button-collapse').sideNav('hide');
             x = 0;
             self.limparUsuario();
@@ -236,7 +240,7 @@
 
     self.abrirPorta = function () {
         if (self.btnAbrirDesabilitado()) return;
-        //self.abrindoPorta(true);
+        self.abrindoPorta(true);
         self.btnAbrirDesabilitado(true);
         var url = "http://porta.digitaldesk.com.br/abrirporta?token=" + self.token();
         validarToken(url);
@@ -268,11 +272,12 @@
         alert(textoPorta);
         self.abrindoPorta(false);
         self.pagina('home');
+        self.caixaGoogle(false);
     }
 
     function removerDesativado(textoPorta) {
         self.loaderPage(false);
-        //self.abrindoPorta(false);
+        self.abrindoPorta(false);
         alert(textoPorta);
         self.btnLoginDesabilitado(false);
         self.desconectar();
