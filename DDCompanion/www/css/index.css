@@ -61,6 +61,14 @@ i.material-icons.camposLogin{
     right: 10px;
 }
 
+.waves-effect.waves-light.btn.grey.lighten-1.col.s12.m4.l8{
+    width: 115px;
+}
+
+.waves-effect.waves-light.btn.green.accent-4.col.s12.m4.l8{
+     float: right; 
+     width: 115px;
+}
 /*BOTÃO GOOGLE*/
 #customBtn {
     position: relative;
@@ -254,13 +262,17 @@ span.buttonText {
         width: 120px;
         height: 220px;
     }
+    .caixaGoogle{ height: 210px; }
+    .caixaLogin{ bottom: -50%; }
+    .waves-effect.waves-light.btn.grey.lighten-1.col.s12.m4.l8 { width: 100px; }
+    .waves-effect.waves-light.btn.green.accent-4.col.s12.m4.l8{ width: 100px; }
+}
 
-    .caixaGoogle{
-        height: 210px;
-    }
-
-    .caixaLogin{
-         bottom: -50%;
-    }
-   
+@media only screen and (min-width: 601px) and (max-width:992px) {
+    .logo-home { width: 250px; height: 520px; }
+    .caixaGoogle{ height: 450px; }
+    .caixaLogin{ font-size: 25px; text-align: center; }
+    span.buttonText{ font-size: 30px; }
+    span.icon{ width: 55px; height: 55px; margin-left: 15px; margin-top: 15px; }
+    #customBtn{ width: 300px; margin-left: -150px; height: 70px; }
 }
