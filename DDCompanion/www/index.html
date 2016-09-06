@@ -16,9 +16,7 @@
     <title>DD Companion</title>
 </head>
 <body style="display: none;" class="fundo">
-    <div data-bind="if: pagina() == 'loader', css: { 'loaderPage': loaderPage }">
-    </div>
-
+    <div data-bind="if: pagina() == 'loader', css: { 'loaderPage': loaderPage }"></div>
 
     <div data-bind="if: pagina() == 'login',  css: { 'caixaGoogle': caixaGoogle }">
         <div class="container">
@@ -28,7 +26,6 @@
             <span class="icon"></span>
             <span class="buttonText">Continue</span>
         </div>
-
         <div class="caixaLogin">
             or <a data-bind="click: chamarLoginUsuario" style="color: #4db81a">login</a> with user
         </div>
@@ -50,30 +47,18 @@
                     </div>
                 </div>
                 <a class="waves-effect waves-light btn grey lighten-1 col s12 m4 l8" data-bind="click: voltarTelaLogin">Voltar</a>
-                <a class="waves-effect waves-light btn green accent-4 col s12 m4 l8" data-bind="click: logarUsuario" ">Logar</a>
-                <!--<button class="waves-effect waves-light btn green accent-4 col s12 m4 l8" data-bind="click: logarUsuario">Logar</button>
-    <button class="waves-effect waves-light btn green accent-4 col s12 m4 l8" data-bind="click: backHome">Voltar</button>-->
-            </div>
+                <a class="waves-effect waves-light btn green accent-4 col s12 m4 l8" data-bind="click: logarUsuario">Logar</a>
+             </div>
         </div>
     </div>
 
     <div data-bind="if: pagina() == 'home'" data-role="main" class="ui-content fundoHome">
         <nav>
             <div class="nav-wrapper grey darken-3">
-                <a class="brand-logo left" style="padding-left: 30px">DD Companion</a>
+                <p class="brand-logo left" style="padding-left: 40px">DD Companion</p>
                 <a href="#" style="text-decoration:none" data-activates="mobile-demo" data-bind="click: configurarSidenav" class="button-collapse">
                     <i class="material-icons">menu</i>
                 </a>
-                <ul class="right hide-on-med-and-down">
-                    <!--<li>
-                <div class="userView">
-                    <img data-bind="attr: {src: photoUrl}" class="circle">
-                    <span  data-bind="value: name" class="black-text name"></span></a>
-                    <span  data-bind="value: email" class="black-text email"></span></a>
-                </div>
-            </li>
-            <li><div class="divider"></div></li>-->
-                </ul>
                 <ul class="side-nav" id="mobile-demo">
                     <li>
                         <div class="userView grey darken-3">
@@ -83,12 +68,11 @@
                         </div>
                     </li>
                     <li>
-                        <a data-bind="click: desconectar, disable: btnDesconectarDesabilitado">Desconectar</a>
+                        <a data-bind="click: desconectar, enable: btnDesconectarDesabilitado">Desconectar</a>
                     </li>
                 </ul>
             </div>
         </nav>
-        
         <div class="container side-collapse-container">
             <div class="row">
                 <div class="container designAbrir">
@@ -101,21 +85,20 @@
                 </div>
             </div>
         </div>
-
-        <!--<a class="btn-floating btn-large waves-effect waves-light #bdbdbd grey lighten-1 btnabrirPorta"><i class="material-icons">power_settings_new</i></a>-->
      </div>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="scripts/platformOverrides.js"></script>
-        <script type="text/javascript" src="scripts/jquery-1.9.1.min.js"></script>
-        <script type="text/javascript" src="scripts/knockout-3.4.0.js"></script>
-        <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
-        <script type="text/javascript" src="scripts/index.js"></script>
-        <script type="text/javascript" src="scripts/script.js"></script>
-        <script>
-            var viewModel = new ViewModel();
-            ko.applyBindings(viewModel);
-            $('.fundo').css('display', 'block');
-        </script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="scripts/platformOverrides.js"></script>
+    <script type="text/javascript" src="scripts/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="scripts/knockout-3.4.0.js"></script>
+    <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+    <script type="text/javascript" src="scripts/index.js"></script>
+    <script type="text/javascript" src="scripts/script.js"></script>
+    <script type="text/javascript" src="../plugins/cordova-plugin-statusbar/www/statusbar.js"></script>
+    <script>
+        var viewModel = new ViewModel();
+        ko.applyBindings(viewModel);
+        $('.fundo').css('display', 'block');
+    </script>
 </body>
 </html>

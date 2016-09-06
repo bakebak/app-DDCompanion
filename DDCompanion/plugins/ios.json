@@ -16,6 +16,9 @@
         },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "br.com.digitaldesk.DDCompanion"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "br.com.digitaldesk.DDCompanion"
         }
     },
     "dependent_plugins": {}

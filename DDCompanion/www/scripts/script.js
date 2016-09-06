@@ -1,7 +1,7 @@
 ﻿function ViewModel() {
     var self = this;
-    self.pagina = ko.observable('login');
-    self.loaderPage = ko.observable(false);
+    self.pagina = ko.observable('loader');
+    self.loaderPage = ko.observable(true);
 
     /*LOGIN*/
     // self.manterConectado = ko.observable(true);
@@ -23,10 +23,11 @@
     /*HOME*/
     self.abrindoPorta = ko.observable(false);
     self.btnAbrirDesabilitado = ko.observable(false);
-    self.btnDesconectarDesabilitado = ko.observable(false);
+    self.btnDesconectarDesabilitado = ko.observable(true);
 
     var dadosUsuario = [];
     var x = 0;
+    var y = 0;
     var mensagem = {
         portaAberta: 'Porta desenergizada',
         portaFechada: 'Porta não foi desenergizada',
@@ -46,9 +47,11 @@
        );
 
        appp.fetch(function (dadosUsuario) {
-           self.nome(dadosUsuario[0]);
-           self.email(dadosUsuario[1]);
-           self.fotoUrl(dadosUsuario[2]);
+            if (dadosUsuario != null) {
+                self.nome(dadosUsuario[0]);
+                self.email(dadosUsuario[1]);
+                self.fotoUrl(dadosUsuario[2]);
+            }
        }, function (err) {
            console.log("Erro " + err);
        }, "dadosUsuario"
@@ -60,21 +63,26 @@
            console.log("Erro " + err);
        }, "token"
        );
-   }, 1500);
+   }, 3000);
 
 
    function checarCampos(value) {
+       if (StatusBar.isVisible) {
+           console.log("Aloooooooo");
+       }
+
        self.loaderPage(false);
        if (value != null) {
-            self.pagina('home');
-            $('.button-collapse').sideNav('show');
-            self.btnLoginDesabilitado(true);
+           self.pagina('home');
+           StatusBar.backgroundColorByHexString("#333333");
+           $('.button-collapse').sideNav('show');
+           self.btnLoginDesabilitado(true);
         }
        else { self.pagina('login'); self.caixaGoogle(true); }
    }
 
    self.logarGoogle = function () {
-       self.btnDesconectarDesabilitado(false);
+       self.btnDesconectarDesabilitado(true);
        self.btnLoginDesabilitado(true);
        var GooglePlus = window.plugins.googleplus;
        window.plugins.googleplus.login(
@@ -108,6 +116,7 @@
        else if (self.usuario() == "" && self.senha() == "") { alert(mensagem.campoVazio); }
        if (self.usuario() != "" && self.senha() != "") {
            var url = 'http://porta.digitaldesk.com.br/autenticar/usuario?key=' + self.senha() + '&user=' + self.usuario();
+           self.loaderPage(true);
            validarUsuario(url);
        }
    }
@@ -145,6 +154,7 @@
        if (self.pagina() == 'login') { self.pagina('login'); self.caixaGoogle(true);}
        else { self.pagina('loginUsuario'); self.caixaGoogle(false); }
        alert(texto);
+       y = 1;
        self.desconectar();
        self.btnLoginDesabilitado(false);
    }
@@ -154,7 +164,7 @@
        self.pagina('home');
        self.caixaGoogle(false);
        $('.button-collapse').sideNav('show');
-       self.btnDesconectarDesabilitado(false);
+       self.btnDesconectarDesabilitado(true);
        dadosUsuario = [result.displayName, result.email, result.imageUrl];
        salvarUsuario(result);
        self.nome(dadosUsuario[0]);
@@ -184,15 +194,17 @@
        }, "token", self.token());
    }
 
-    self.desconectar = function () {
-        self.btnDesconectarDesabilitado(true);
+   self.desconectar = function () {
+        if (y == 0) { self.loaderPage(true); }
+        self.btnDesconectarDesabilitado(false);
         self.btnLoginDesabilitado(false);
+        console.log("Apertado");
         var GooglePlus = window.plugins.googleplus;
         trySilentLogin();
         window.plugins.googleplus.disconnect(
-        function (result) {
+            function (result) {
             removerDados();
-        }, function (msg) {
+            }, function (msg) {
             deslogar();
         });
     }
@@ -224,9 +236,11 @@
         var appp = plugins.appPreferences;
         appp.remove(function (value) {
             self.pagina('login');
+            self.loaderPage(false);
             self.caixaGoogle(true);
             $('.button-collapse').sideNav('hide');
             x = 0;
+            y = 0;
             self.limparUsuario();
             self.limparSenha();
         }, function (err) {
@@ -280,6 +294,7 @@
         self.abrindoPorta(false);
         alert(textoPorta);
         self.btnLoginDesabilitado(false);
+        y = 1;
         self.desconectar();
     }
 
