@@ -113,4 +113,6 @@
   <preference name="StatusBarBackgroundColor" value="#378613" />
   <preference name="StatusBarStyle" value="lightcontent" />
   <plugin name="cordova-plugin-statusbar" version="2.1.3" />
+  <plugin name="cordova-plugin-ble" version="1.4.4" />
+  <plugin name="cordova-plugin-eddystone" version="1.3.0" />
 </widget>
