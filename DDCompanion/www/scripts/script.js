@@ -84,29 +84,29 @@
    }
 
    self.logarGoogle = function () {
-       var GooglePlus = window.plugins.googleplus;
-       self.btnLoginDesabilitado(true);
-       setTimeout(function () {
-           window.plugins.googleplus.login(
-               {
-                   'scopes': 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
-                   'webClientId': "489399558653-rde58r2h6o8tnaddho7lathv2o135l7m.apps.googleusercontent.com",
-                   'offline': true,
-               },
-               function (result) {
-                   var url = 'http://porta.digitaldesk.com.br/autenticar/google?token=' + result.serverAuthCode;
-                   paginaValue = self.pagina();
-                   self.loader(true);
-                   self.pagina('loader');
-                   validarUsuario(url, result, paginaValue);
-               },
-               function (msg) {
-                   console.log(msg);
-                   self.btnLoginDesabilitado(false);
-                   alert(mensagem.erroGoogle);
-               }
-           );
-       }, 100);
+        var GooglePlus = window.plugins.googleplus;
+        self.btnLoginDesabilitado(true);
+        setTimeout(function () {
+            window.plugins.googleplus.login(
+                {
+                    'scopes': 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
+                    'webClientId': "489399558653-rde58r2h6o8tnaddho7lathv2o135l7m.apps.googleusercontent.com",
+                    'offline': true,
+                },
+                function (result) {
+                    var url = 'http://porta.digitaldesk.com.br/autenticar/google?token=' + result.serverAuthCode;
+                    paginaValue = self.pagina();
+                    self.loader(true);
+                    self.pagina('loader');
+                    validarUsuario(url, result, paginaValue);
+                },
+                function (msg) {
+                    console.log(msg);
+                    self.btnLoginDesabilitado(false);
+                    alert(mensagem.erroGoogle);
+                }
+            );
+        }, 100);
    }
 
    self.chamarLoginUsuario = function () {
