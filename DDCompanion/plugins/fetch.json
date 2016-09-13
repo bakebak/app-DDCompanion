@@ -25,5 +25,29 @@
         "variables": {
             "REVERSED_CLIENT_ID": "com.googleusercontent.apps.489399558653-4kt78r4a61krt46ibn79f26f8q516lu7"
         }
+    },
+    "cordova-plugin-statusbar": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-statusbar"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-eddystone": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-eddystone"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-ble": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-ble"
+        },
+        "is_top_level": false,
+        "variables": {}
     }
 }
