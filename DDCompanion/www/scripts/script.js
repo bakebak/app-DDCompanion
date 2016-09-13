@@ -64,7 +64,6 @@
 
        appp.fetch(function (valueToken) {
            self.token(valueToken);
-           console.log("ValueToken " + valueToken);
        }, function (err) {
            console.log("Erro " + err);
        }, "token"
