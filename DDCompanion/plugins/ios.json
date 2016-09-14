@@ -19,14 +19,7 @@
         },
         "cordova-plugin-statusbar": {
             "PACKAGE_NAME": "br.com.digitaldesk.DDCompanion"
-        },
-        "cordova-plugin-eddystone": {
-            "PACKAGE_NAME": "br.com.digitaldesk.DDCompanion"
         }
     },
-    "dependent_plugins": {
-        "cordova-plugin-ble": {
-            "PACKAGE_NAME": "br.com.digitaldesk.DDCompanion"
-        }
-    }
+    "dependent_plugins": {}
 }

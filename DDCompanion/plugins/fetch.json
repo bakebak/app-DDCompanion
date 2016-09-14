@@ -34,14 +34,6 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-eddystone": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-eddystone"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "cordova-plugin-ble": {
         "source": {
             "type": "registry",
