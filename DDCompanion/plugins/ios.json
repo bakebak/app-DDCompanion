@@ -10,16 +10,32 @@
         "cordova-plugin-app-preferences": {
             "PACKAGE_NAME": "br.com.digitaldesk.DDCompanion"
         },
-        "cordova-plugin-googleplus": {
-            "REVERSED_CLIENT_ID": "com.googleusercontent.apps.489399558653-4kt78r4a61krt46ibn79f26f8q516lu7",
-            "PACKAGE_NAME": "br.com.digitaldesk.DDCompanion"
-        },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "br.com.digitaldesk.DDCompanion"
         },
         "cordova-plugin-statusbar": {
             "PACKAGE_NAME": "br.com.digitaldesk.DDCompanion"
+        },
+        "cordova-plugin-googleplus": {
+            "REVERSED_CLIENT_ID": "com.googleusercontent.apps.489399558653-v1a3dhv71it77op15foibeen28e4iitv",
+            "PACKAGE_NAME": "br.com.digitaldesk.DDCompanion"
+        },
+        "phonegap-plugin-mobile-accessibility": {
+            "PACKAGE_NAME": "br.com.digitaldesk.DDCompanion"
+        },
+        "de.appplant.cordova.plugin.local-notification": {
+            "PACKAGE_NAME": "br.com.digitaldesk.DDCompanion"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "br.com.digitaldesk.DDCompanion"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "br.com.digitaldesk.DDCompanion"
+        },
+        "cordova-plugin-app-event": {
+            "PACKAGE_NAME": "br.com.digitaldesk.DDCompanion"
+        }
+    }
 }

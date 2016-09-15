@@ -110,10 +110,10 @@ span.icon {
 
 span.buttonText {
     display: inline-block;
-    font-size: 14px;
+    font-size: 14px!important;
     font-weight: bold;
     font-family: 'Roboto', sans-serif;
-    line-height: 52px;
+    line-height: 52px!important;
 }
 
 /*TELA HOME*/
