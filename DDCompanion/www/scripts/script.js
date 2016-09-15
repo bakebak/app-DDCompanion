@@ -1,5 +1,5 @@
 ﻿function ViewModel() {
-    $.ajaxSetup({ timeout: 10000 });
+    $.ajaxSetup({ timeout: 22000 });
 
     var self = this;
     self.pagina = ko.observable('loader');
@@ -103,7 +103,7 @@
                 function (msg) {
                     //console.log(msg);
                     self.btnLoginDesabilitado(false);
-                    alert(msg);
+                    alert(mensagem.erroGoogle);
                 }
             );
     }
