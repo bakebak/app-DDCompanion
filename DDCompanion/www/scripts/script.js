@@ -2,8 +2,8 @@
     $.ajaxSetup({ timeout: 22000 });
 
     var self = this;
-    self.pagina = ko.observable('loader');
-    self.loader = ko.observable(true);
+    self.pagina = ko.observable('login');
+    self.loader = ko.observable(false);
 
     /*LOGIN*/
     // self.manterConectado = ko.observable(true);
@@ -94,8 +94,14 @@
                     'offline': true,
                 },
                 function (result) {
-                    var url = 'http://porta.digitaldesk.com.br/autenticar/google?token=' + result.serverAuthCode;
+                    if (result.accessToken == "null") {
+                        var url = 'http://porta.digitaldesk.com.br/autenticar/google/android?token=' + result.serverAuthCode;
+                    }
+                    else {
+                        var url = 'http://porta.digitaldesk.com.br/autenticar/google/ios?token=' + result.accessToken;
+                    }
                     paginaValue = self.pagina();
+                    console.log(result);
                     self.loader(true);
                     self.pagina('loader');
                     validarUsuario(url, result, paginaValue);
@@ -103,7 +109,7 @@
                 function (msg) {
                     //console.log(msg);
                     self.btnLoginDesabilitado(false);
-                    alert(mensagem.erroGoogle);
+                    chamarAlert(mensagem.erroGoogle);
                 }
             );
     }
@@ -120,9 +126,19 @@
         self.limparSenha();
     }
 
+    function chamarAlert(mensagemAlert) {
+        navigator.notification.alert(
+             mensagemAlert,  // message
+             null,
+             'Alerta',            // title
+             'Fechar'                  // buttonName
+         );
+    }
+
     self.logarUsuario = function () {
-        if (self.usuario() == "" || self.senha() == "") { alert(mensagem.campoVazio); }
-        else if (self.usuario() == "" && self.senha() == "") { alert(mensagem.campoVazio); }
+        if (self.usuario() == "" || self.senha() == "") { chamarAlert(mensagem.campoVazio);  }
+
+        else if (self.usuario() == "" && self.senha() == "") { chamarAlert(mensagem.campoVazio); }
         if (self.usuario() != "" && self.senha() != "") {
             var url = 'http://porta.digitaldesk.com.br/autenticar/usuario?key=' + self.senha() + '&user=' + self.usuario();
             paginaValue = self.pagina();
@@ -163,7 +179,7 @@
         self.loader(false);
         if (pagina == 'login') {  self.pagina('login'); }
         else { self.limparSenha(); self.limparUsuario(); self.pagina('loginUsuario');}
-        alert(texto);
+        chamarAlert(texto);
         y = 1;
         z = 1;
         self.desconectar();
@@ -296,7 +312,7 @@
 
     function mensagemPortaAberta(textoPorta) {
         self.loader(false);
-        alert(textoPorta);
+        chamarAlert(textoPorta);
         self.abrindoPorta(false);
         self.pagina('home');
         StatusBar.backgroundColorByHexString("#378613");
@@ -308,7 +324,7 @@
         self.limparUsuario();
         self.pagina('login');
         self.abrindoPorta(false);
-        alert(textoPorta);
+        chamarAlert(textoPorta);
         self.btnLoginDesabilitado(false);
         y = 1;
         self.desconectar();

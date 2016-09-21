@@ -1,11 +1,21 @@
 {
-     "android": {
-         "release": {
-             "keystore": "D://Novo_app/app-DDCompanion/DDCompanion/platforms/android/DDCompanion.keystore",
-             "storePassword": "DD159458",
-             "alias": "DDCompanionApp",
-             "password" : "DD159458",
-             "keystoreType": ""
-         }
-     }
+  "android": {
+    "release": {
+      "keystore": "D://Bruno Klein/app-DDCompanion/DDCompanion/platforms/android/DDCompanion.keystore",
+      "storePassword": "DD159458",
+      "alias": "DDCompanionApp",
+      "password": "DD159458",
+      "keystoreType": ""
+    }
+  },
+   "ios": {
+        "debug": {
+            "codeSignIdentity": "iOS Development",
+            "provisioningProfile": "94a9710a-ee55-4fef-8ec7-f349efb30309"
+        },
+        "release": {
+            "codeSignIdentity": "iOS Distribution",
+            "provisioningProfile": "f4ee49c2-4198-4cac-99fe-d533e5605d91"
+        }
+    }
  }
