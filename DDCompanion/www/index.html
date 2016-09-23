@@ -46,10 +46,6 @@
         </div>
     </div>
 
-    <div data-bind="if: pagina() == 'testeBeacons'">
-        <a class="waves-effect waves-light btn grey lighten-1 col s12 m4 l8" data-bind="click: voltarTelaLogin">Voltar</a>
-    </div>
-
     <div data-bind="if: pagina() == 'loginUsuario'">
         <div class="box-logo">
             <div class="logo-home"></div>
@@ -82,7 +78,7 @@
     <div data-bind="if: pagina() == 'home'" data-role="main" class="ui-content fundoHome">
         <nav>
             <div class="nav-wrapper" style="background: #4db81a">
-                <p class="brand-logo left" style="padding-left: 40px">DD Companion</p>
+                <p data-bind="css: { 'teste': teste, }" class="brand-logo left" style="padding-left: 40px">DD Companion</p>
                 <a href="#" style="text-decoration:none" data-activates="mobile-demo" data-bind="click: configurarSidenav" class="button-collapse">
                     <i class="material-icons">menu</i>
                 </a>

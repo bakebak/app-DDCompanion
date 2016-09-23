@@ -25,6 +25,7 @@
     self.abrindoPorta = ko.observable(false);
     self.btnAbrirDesabilitado = ko.observable(false);
     self.btnDesconectarDesabilitado = ko.observable(true);
+    self.teste = ko.observable(false);
 
     var dadosUsuario = [];
     var x = 0;
@@ -94,14 +95,16 @@
                     'offline': true,
                 },
                 function (result) {
-                    if (result.accessToken == "null") {
+                    if (result.accessToken == undefined) {
                         var url = 'http://porta.digitaldesk.com.br/autenticar/google/android?token=' + result.serverAuthCode;
+                        console.log(result.serverAuthCode);
                     }
                     else {
                         var url = 'http://porta.digitaldesk.com.br/autenticar/google/ios?token=' + result.accessToken;
+                        self.teste(true);
                     }
                     paginaValue = self.pagina();
-                    console.log(result);
+                    console.log(result.accessToken);
                     self.loader(true);
                     self.pagina('loader');
                     validarUsuario(url, result, paginaValue);

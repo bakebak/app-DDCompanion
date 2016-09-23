@@ -11,11 +11,11 @@
    "ios": {
         "debug": {
             "codeSignIdentity": "iOS Development",
-            "provisioningProfile": "94a9710a-ee55-4fef-8ec7-f349efb30309"
+            "provisioningProfile": "9c34242f-79e3-4c48ba7f-6d6a84df463f"
         },
         "release": {
             "codeSignIdentity": "iOS Distribution",
-            "provisioningProfile": "f4ee49c2-4198-4cac-99fe-d533e5605d91"
+            "provisioningProfile": "b2cf05ef-727b-46dd-8a61-16d4bc64dbdd"
         }
     }
  }
