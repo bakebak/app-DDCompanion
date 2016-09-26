@@ -2,8 +2,20 @@
     $.ajaxSetup({ timeout: 22000 });
 
     var self = this;
-    self.pagina = ko.observable('login');
-    self.loader = ko.observable(false);
+
+    var app = {};
+    var beacons = {};
+    var updateTimer = null;
+    var abc = 0;
+    var regions = [{ uuid: '636f3f8f-6491-4bee-95f7-d8cc64a863b5' }, ];
+    // Background detection.
+    var notificationID = 0;
+    var inBackground = false;
+    document.addEventListener('pause', function () { inBackground = true });
+    document.addEventListener('resume', function () { inBackground = false });
+
+    self.pagina = ko.observable('loader');
+    self.loader = ko.observable(true);
 
     /*LOGIN*/
     // self.manterConectado = ko.observable(true);
@@ -39,13 +51,15 @@
         semAcesso: 'Usuário não possui acesso',
         erro: 'Erro de acesso',
         campoVazio: 'Preencha todos os campos',
-        erroGoogle: 'Não foi possível conectar-se com o Google'
+        erroGoogle: 'Não foi possível conectar-se com o Google',
+        abrirPorta: 'Você deseja abrir a porta?'
     }
 
     setTimeout(function () {
         StatusBar.backgroundColorByHexString("#378613");
         var GooglePlus = window.plugins.googleplus;
         var appp = plugins.appPreferences;
+        app.initialize();
         appp.fetch(function (value) {
             checarCampos(value);
         }, function (err) {
@@ -127,15 +141,6 @@
         StatusBar.backgroundColorByHexString("#378613");
         self.limparUsuario();
         self.limparSenha();
-    }
-
-    function chamarAlert(mensagemAlert) {
-        navigator.notification.alert(
-             mensagemAlert,  // message
-             null,
-             'Alerta',            // title
-             'Fechar'                  // buttonName
-         );
     }
 
     self.logarUsuario = function () {
@@ -349,4 +354,142 @@
         self.senha('');
     }
 
+    function chamarAlert(mensagemAlert) {
+        navigator.notification.alert(
+             mensagemAlert,  
+             null,
+             'Alerta', 
+             'Fechar'
+         );
+    }
+
+    function chamarConfirm(mensagemConfirm) {
+        navigator.notification.confirm(
+            mensagemConfirm, // message
+            onConfirm,            // callback to invoke with index of button pressed
+            'Atenção',           // title
+            ['Confirmar', 'Cancelar']     // buttonLabels
+        );
+    }
+
+    function onConfirm(){
+        self.abrirPorta();
+    }
+
+    /********************************************************************************************************/
+
+
+    app.initialize = function () {
+        document.addEventListener(
+                'deviceready',
+                function () { evothings.scriptsLoaded(onDeviceReady) },
+                false);
+    }
+
+    function onDeviceReady() {
+        window.locationManager = cordova.plugins.locationManager;
+        startScan();
+        updateTimer = setInterval(displayBeaconList, 500);
+        // Handle the Cordova pause and resume events
+        if (window.MobileAccessibility) {
+            window.MobileAccessibility.usePreferredTextZoom(false);
+        }
+        // TODO: Cordova has been loaded. Perform any initialization that requires Cordova here.
+    };
+
+    function onPause() {
+        // TODO: This application has been suspended. Save application state here.
+        //app.initialize();
+    };
+
+    function onResume() {
+        //app.initialize();
+        // TODO: This application has been reactivated. Restore application state here.
+    };
+
+    function startScan() {
+        // The delegate object holds the iBeacon callback functions
+        // specified below.
+        var delegate = new locationManager.Delegate();
+        console.log("Aqui");
+        // Called continuously when ranging beacons.
+        delegate.didRangeBeaconsInRegion = function (pluginResult) {
+            //console.log('didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult))
+            for (var i in pluginResult.beacons) {
+                // Insert beacon into table of found beacons.
+                var beacon = pluginResult.beacons[i];
+                beacon.timeStamp = Date.now();
+                var key = beacon.uuid + ':' + beacon.major + ':' + beacon.minor;
+                beacons[key] = beacon;
+            }
+        };
+
+        // Called when starting to monitor a region.
+        // (Not used in this example, included as a reference.)
+        delegate.didStartMonitoringForRegion = function (pluginResult) {
+            //console.log('didStartMonitoringForRegion:' + JSON.stringify(pluginResult))
+        };
+
+        // Called when monitoring and the state of a region changes.
+        // If we are in the background, a notification is shown.
+        delegate.didDetermineStateForRegion = function (pluginResult) {
+            if (inBackground) {
+                // Show notification if a beacon is inside the region.
+                // TODO: Add check for specific beacon(s) in your app.
+                if (pluginResult.region.typeName == 'BeaconRegion' &&
+                    pluginResult.state == 'CLRegionStateInside') {
+                    cordova.plugins.notification.local.schedule(
+                        {
+                            id: ++notificationID,
+                            title: 'Você está perto da porta',
+                            text: 'Clique aqui para abrir a porta.'
+                        });
+                }
+            }
+        };
+
+        // Set the delegate object to use.
+        locationManager.setDelegate(delegate);
+
+        // Request permission from user to access location info.
+        // This is needed on iOS 8.
+        locationManager.requestAlwaysAuthorization();
+
+        // Start monitoring and ranging beacons.
+        for (var i in regions) {
+            var beaconRegion = new locationManager.BeaconRegion(
+                i + 1,
+                regions[i].uuid);
+
+            // Start ranging.
+            locationManager.startRangingBeaconsInRegion(beaconRegion)
+                .fail(console.error)
+                .done();
+
+            // Start monitoring.
+            // (Not used in this example, included as a reference.)
+            locationManager.startMonitoringForRegion(beaconRegion)
+                .fail(console.error)
+                .done();
+        }
+    }
+
+    function displayBeaconList() {
+        var timeNow = Date.now();
+
+        if (abc == 0) {
+            //chamarConfirm(mensagem.abrirPorta);
+            abc = 1;
+        }
+        // Update beacon list.
+        $.each(beacons, function (key, beacon) {
+            // Only show beacons that are updated during the last 60 seconds.
+            if (beacon.timeStamp + 60000 > timeNow) {
+                // Map the RSSI value to a width in percent for the indicator.
+                var rssiWidth = 1; // Used when RSSI is zero or greater.
+                if (beacon.rssi < -100) { rssiWidth = 100; }
+                else if (beacon.rssi < 0) { rssiWidth = 100 + beacon.rssi; }
+            }
+        });
+    }
 }
