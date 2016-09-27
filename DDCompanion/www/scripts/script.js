@@ -97,20 +97,17 @@
                 function (result) {
                     if (result.accessToken == undefined) {
                         var url = 'http://porta.digitaldesk.com.br/autenticar/google/android?token=' + result.serverAuthCode;
-                        console.log(result.serverAuthCode);
                     }
                     else {
                         var url = 'http://porta.digitaldesk.com.br/autenticar/google/ios?token=' + result.accessToken;
                         self.teste(true);
                     }
                     paginaValue = self.pagina();
-                    console.log(result.accessToken);
                     self.loader(true);
                     self.pagina('loader');
                     validarUsuario(url, result, paginaValue);
                 },
                 function (msg) {
-                    //console.log(msg);
                     self.btnLoginDesabilitado(false);
                     chamarAlert(mensagem.erroGoogle);
                 }
@@ -131,10 +128,10 @@
 
     function chamarAlert(mensagemAlert) {
         navigator.notification.alert(
-             mensagemAlert,  // message
+             mensagemAlert, // message
              null,
-             'Alerta',            // title
-             'Fechar'                  // buttonName
+             'Alerta',      // title
+             'Fechar'       // buttonName
          );
     }
 
