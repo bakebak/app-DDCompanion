@@ -2,8 +2,8 @@
     $.ajaxSetup({ timeout: 22000 });
 
     var self = this;
-    self.pagina = ko.observable('login');
-    self.loader = ko.observable(false);
+    self.pagina = ko.observable('loader');
+    self.loader = ko.observable(true);
 
     /*LOGIN*/
     // self.manterConectado = ko.observable(true);
