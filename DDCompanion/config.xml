@@ -117,7 +117,6 @@
   <plugin name="cordova-plugin-network-information" version="1.3.1-dev" />
   <plugin name="phonegap-plugin-mobile-accessibility" version="1.0.5-dev" />
   <plugin name="cordova-plugin-app-event" version="1.2.0" />
-  <plugin name="de.appplant.cordova.plugin.local-notification" version="0.8.4" />
   <plugin name="cordova-plugin-dialogs" version="1.3.0" />
   <plugin name="com.unarin.cordova.beacon" version="3.4.1" />
 </widget>
