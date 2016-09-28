@@ -37,16 +37,14 @@
     self.btnAbrirDesabilitado = ko.observable(false);
     self.btnDesconectarDesabilitado = ko.observable(true);
     self.teste = ko.observable(false);
-    self.rssi = ko.observable('');
-    self.tx = ko.observable('');
-    self.proximity = ko.observable('');
-    self.timeStamp = ko.observable('');
+    self.distancia = ko.observable('');
     var dadosUsuario = [];
     var x = 0;
     var y = 0;
     var z;
     var limite = 0;
     var logado = false;
+    var permissao = false;
     var beacons = {};
     var paginaValue;
     var mensagem = {
@@ -502,14 +500,11 @@
 
     function displayBeaconList() {
         var timeNow = Date.now();
-
-        /*if (limite == 0) {
-           chamarConfirm(mensagem.abrirPorta);
-           limite = 1;
-        }*/
         // Update beacon list.
-        console.log(beacon.rssi);
         $.each(beacons, function (key, beacon) {
+            var rssi = beacon.rssi;
+            var txPower = beacon.tx;
+            calcularDistancia(rssi, txPower);
             // Only show beacons that are updated during the last 60 seconds.
             if (beacon.timeStamp + 60000 > timeNow) {
                 // Map the RSSI value to a width in percent for the indicator.
@@ -518,5 +513,21 @@
                 else if (beacon.rssi < 0) { rssiWidth = 100 + beacon.rssi; }
             }
         });
+    }
+
+    function calcularDistancia(rssi, txPower) {
+        var ratio = (rssi * 1 / txPower);
+        if (ratio < 1.0) {
+            var resultado = Math.pow(ratio, 10);
+            self.distancia(resultado);
+        } else {
+            var resultado = (0.89976) * Math.pow(ratio, 7.7095) + 0.111;
+        }
+        permitirScan(resultado);
+    }
+
+    function permitirScan(resultado) {
+        if (resultado < 10) { permissao = true; }
+        else { permissao = false; }
     }
 }
