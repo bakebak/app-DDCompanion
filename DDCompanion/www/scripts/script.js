@@ -6,8 +6,7 @@
     var app = {};
     var beacons = {};
     var updateTimer = null;
-    var abc = 0;
-    var regions = [{ uuid: '636f3f8f-6491-4bee-95f7-d8cc64a863b5' }, ];
+    var regions = [{ uuid: 'E2C56DB5-DFFB-48D2-B060-D0F5A71096E0' }, ];
     // Background detection.
     var notificationID = 1;
     var inBackground = false;
@@ -38,11 +37,14 @@
     self.btnAbrirDesabilitado = ko.observable(false);
     self.btnDesconectarDesabilitado = ko.observable(true);
     self.teste = ko.observable(false);
-
+    self.distancia = ko.observable('');
     var dadosUsuario = [];
     var x = 0;
     var y = 0;
     var z;
+    var limite = 0;
+    var logado = false;
+    var permissao = false;
     var beacons = {};
     var paginaValue;
     var mensagem = {
@@ -52,7 +54,7 @@
         erro: 'Erro de acesso',
         campoVazio: 'Preencha todos os campos',
         erroGoogle: 'Não foi possível conectar-se com o Google',
-        abrirPorta: 'Você deseja abrir a porta?'
+        abrirPorta: 'Você tem certeza?'
     }
 
     setTimeout(function () {
@@ -94,8 +96,9 @@
             StatusBar.backgroundColorByHexString("#378613");
             $('.button-collapse').sideNav('show');
             self.btnLoginDesabilitado(true);
+            logado = true;
         }
-        else { y = 1; z = 0; self.desconectar(); }
+        else { y = 1; z = 0; self.desconectar();}
     }
 
     self.logarGoogle = function () {
@@ -198,6 +201,7 @@
         self.pagina('home');
         self.limparUsuario();
         self.limparSenha();
+        logado = true;
         StatusBar.backgroundColorByHexString("#378613");
         $('.button-collapse').sideNav('show');
         self.btnDesconectarDesabilitado(true);
@@ -273,6 +277,8 @@
     function removerDados() {
         var appp = plugins.appPreferences;
         x = 0;
+        logado = false;
+        cordova.plugins.notification.local.clearAll({});
         if (z == 0) { self.pagina('login'); }
         appp.remove(function (value) {
             self.pagina('login');
@@ -292,7 +298,8 @@
         if (self.btnAbrirDesabilitado()) return;
         self.abrindoPorta(true);
         self.btnAbrirDesabilitado(true);
-        var url = "http://porta.digitaldesk.com.br/abrirporta?token=" + self.token();
+        //var url = "http://porta.digitaldesk.com.br/abrirporta?token=" + self.token();
+        var url = "http://porta.digitaldesk.com.br/abrirporta?token=null";
         validarToken(url);
 
         window.setTimeout(function () {
@@ -373,6 +380,7 @@
 
     function onConfirm() {
         self.abrirPorta();
+        self.pagina('home');
     }
 
     /********************************************************************************************************/
@@ -388,7 +396,7 @@
     function onDeviceReady() {
         window.locationManager = cordova.plugins.locationManager;
         startScan();
-        updateTimer = setInterval(displayBeaconList, 1000);
+        updateTimer = setInterval(displayBeaconList, 500);
         // Handle the Cordova pause and resume events
         if (window.MobileAccessibility) {
             window.MobileAccessibility.usePreferredTextZoom(false);
@@ -431,24 +439,36 @@
         // Called when monitoring and the state of a region changes.
         // If we are in the background, a notification is shown.
         delegate.didDetermineStateForRegion = function (pluginResult) {
+            console.log(pluginResult.state);
             if (inBackground) {
                 // Show notification if a beacon is inside the region.
                 // TODO: Add check for specific beacon(s) in your app.
                 if (pluginResult.region.typeName == 'BeaconRegion' &&
                     pluginResult.state == 'CLRegionStateInside') {
-                    cordova.plugins.notification.local.schedule(
-                        {
-                            id: notificationID,
-                            title: 'Você está perto da porta',
-                            text: 'Clique aqui para abrir a porta.'
-                        });
+                    limite = 0;
+                    console.log(logado);
+                    if (logado == true) {
+                        cordova.plugins.notification.local.schedule(
+                            {
+                                id: notificationID,
+                                title: 'Você está perto da porta',
+                                text: 'Clique aqui para abrir a porta.'
+                            });
+                    }
                 }
                 else {
                     cordova.plugins.notification.local.clearAll({});
+                    console.log("Nao achou ");
+
                 }
 
                 cordova.plugins.notification.local.on("click", function (notification, state) {
-                    self.abrirPorta();
+                    console.log("Apertou " + limite);
+                    if (limite == 0) {
+                        self.pagina('loader');
+                        chamarConfirm(mensagem.abrirPorta);
+                        limite = 1;
+                    }
                 }, this)
             }
         };
@@ -482,12 +502,11 @@
     function displayBeaconList() {
         var timeNow = Date.now();
 
-        if (abc == 0) {
-            //chamarConfirm(mensagem.abrirPorta);
-            abc = 1;
-        }
         // Update beacon list.
         $.each(beacons, function (key, beacon) {
+            var rssi = beacon.rssi;
+            var txPower = beacon.tx;
+            calcularDistancia(rssi, txPower);
             // Only show beacons that are updated during the last 60 seconds.
             if (beacon.timeStamp + 60000 > timeNow) {
                 // Map the RSSI value to a width in percent for the indicator.
@@ -496,5 +515,22 @@
                 else if (beacon.rssi < 0) { rssiWidth = 100 + beacon.rssi; }
             }
         });
+    }
+
+    function calcularDistancia(rssi, txPower) {
+        var ratio = (rssi * 1 / txPower);
+        if (ratio < 1.0) {
+            var resultado = Math.pow(ratio, 10);
+            self.distancia(resultado);
+        } else {
+            var resultado = (0.89976) * Math.pow(ratio, 7.7095) + 0.111;
+        }
+        permitirScan(resultado);
+    }
+
+    function permitirScan(resultado) {
+        permissao = true;
+        //if (resultado < 10) { permissao = true; }
+        //else { permissao = false; }
     }
 }
