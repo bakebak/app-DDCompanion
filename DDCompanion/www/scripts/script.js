@@ -6,7 +6,7 @@
     var app = {};
     var beacons = {};
     var updateTimer = null;
-    var regions = [{ uuid: '636f3f8f-6491-4bee-95f7-d8cc64a863b5' }, ];
+    var regions = [{ uuid: 'E2C56DB5-DFFB-48D2-B060-D0F5A71096E0' }, ];
     // Background detection.
     var notificationID = 1;
     var inBackground = false;
@@ -446,7 +446,6 @@
                 if (pluginResult.region.typeName == 'BeaconRegion' &&
                     pluginResult.state == 'CLRegionStateInside') {
                     limite = 0;
-                    console.log("Achou ");
                     console.log(logado);
                     if (logado == true) {
                         cordova.plugins.notification.local.schedule(
@@ -459,6 +458,8 @@
                 }
                 else {
                     cordova.plugins.notification.local.clearAll({});
+                    console.log("Nao achou ");
+
                 }
 
                 cordova.plugins.notification.local.on("click", function (notification, state) {
@@ -500,6 +501,7 @@
 
     function displayBeaconList() {
         var timeNow = Date.now();
+
         // Update beacon list.
         $.each(beacons, function (key, beacon) {
             var rssi = beacon.rssi;
@@ -527,7 +529,8 @@
     }
 
     function permitirScan(resultado) {
-        if (resultado < 10) { permissao = true; }
-        else { permissao = false; }
+        permissao = true;
+        //if (resultado < 10) { permissao = true; }
+        //else { permissao = false; }
     }
 }
