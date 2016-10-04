@@ -37,7 +37,6 @@
     self.btnAbrirDesabilitado = ko.observable(false);
     self.btnDesconectarDesabilitado = ko.observable(true);
     self.teste = ko.observable(false);
-    self.distancia = ko.observable('');
     var dadosUsuario = [];
     var x = 0;
     var y = 0;
