@@ -53,7 +53,8 @@
         erro: 'Erro de acesso',
         campoVazio: 'Preencha todos os campos',
         erroGoogle: 'Não foi possível conectar-se com o Google',
-        abrirPorta: 'Você tem certeza?'
+        abrirPorta: 'Você tem certeza?',
+        semInternet: 'Verifique sua conexão com a internet!'
     }
 
     setTimeout(function () {
@@ -297,8 +298,8 @@
         if (self.btnAbrirDesabilitado()) return;
         self.abrindoPorta(true);
         self.btnAbrirDesabilitado(true);
-        //var url = "http://porta.digitaldesk.com.br/abrirporta?token=" + self.token();
-        var url = "http://porta.digitaldesk.com.br/abrirporta?token=null";
+        var url = "http://porta.digitaldesk.com.br/abrirporta?token=" + self.token();
+        //var url = "http://porta.digitaldesk.com.br/abrirporta?token=null";
         validarToken(url);
 
         window.setTimeout(function () {
@@ -319,7 +320,7 @@
             }
         })
         .fail(function () {
-            removerDesativado(mensagem.erro);
+            chamarAlert(mensagem.semInternet);
         });
     }
 
