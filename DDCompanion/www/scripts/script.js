@@ -395,8 +395,8 @@
 
     function onDeviceReady() {
         window.locationManager = cordova.plugins.locationManager;
-        startScan();
-        updateTimer = setInterval(displayBeaconList, 500);
+        //startScan();
+        //updateTimer = setInterval(displayBeaconList, 500);
         // Handle the Cordova pause and resume events
         if (window.MobileAccessibility) {
             window.MobileAccessibility.usePreferredTextZoom(false);
@@ -414,7 +414,7 @@
         // TODO: This application has been reactivated. Restore application state here.
     };
 
-    function startScan() {
+    /*function startScan() {
         // The delegate object holds the iBeacon callback functions
         // specified below.
         var delegate = new locationManager.Delegate();
@@ -497,9 +497,9 @@
                 .fail(console.error)
                 .done();
         }
-    }
+    }*/
 
-    function displayBeaconList() {
+    /*function displayBeaconList() {
         var timeNow = Date.now();
 
         // Update beacon list.
@@ -515,9 +515,9 @@
                 else if (beacon.rssi < 0) { rssiWidth = 100 + beacon.rssi; }
             }
         });
-    }
+    }*/
 
-    function calcularDistancia(rssi, txPower) {
+    /*function calcularDistancia(rssi, txPower) {
         var ratio = (rssi * 1 / txPower);
         if (ratio < 1.0) {
             var resultado = Math.pow(ratio, 10);
@@ -532,5 +532,5 @@
         permissao = true;
         //if (resultado < 10) { permissao = true; }
         //else { permissao = false; }
-    }
+    }*/
 }
