@@ -112,8 +112,8 @@
             },
             function (result) {
                 if (result.accessToken == undefined) {
-                    var url = 'http://porta.digitaldesk.com.br/autenticar/google/android?token=' + result.serverAuthCode;
-                    console.log(result.serverAuthCode);
+                    //var url = 'http://porta.digitaldesk.com.br/autenticar/google/android?token=' + result.serverAuthCode;
+                    var url = 'http://porta.digitaldesk.com.br/autenticar/google?token=' + result.serverAuthCode;
                 }
                 else {
                     var url = 'http://porta.digitaldesk.com.br/autenticar/google/ios?token=' + result.accessToken;
