@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<widget android-versionCode="4" defaultlocale="en-US" id="br.com.digitaldesk.DDCompanion" version="0.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:vs="http://schemas.microsoft.com/appx/2014/htmlapps">
+<widget android-versionCode="5" defaultlocale="en-US" id="br.com.digitaldesk.DDCompanion" version="0.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:vs="http://schemas.microsoft.com/appx/2014/htmlapps">
   <name>DD Companion</name>
   <description>
   </description>
@@ -121,4 +121,5 @@
   <preference name="SuppressesIncrementalRendering" value="False" />
   <plugin name="cordova-plugin-app-preferences" version="0.99.2" />
   <plugin name="com.unarin.cordova.beacon" version="3.4.1" />
+  <plugin name="de.appplant.cordova.plugin.local-notification" version="0.8.4" />
 </widget>
