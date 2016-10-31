@@ -6,12 +6,13 @@
     var app = {};
     var beacons = {};
     var updateTimer = null;
-    var regions = [{ uuid: 'E2C56DB5-DFFB-48D2-B060-D0F5A71096E0' }, ];
+    /*var regions = [{ uuid: 'E2C56DB5-DFFB-48D2-B060-D0F5A71096E0' },
+                   { uuid: 'B9407F30-F5F8-466E-AFF9-25556B57FE6D' }, ];*/
     // Background detection.
     var notificationID = 1;
-    var inBackground = false;
-    document.addEventListener('pause', function () { inBackground = true });
-    document.addEventListener('resume', function () { inBackground = false });
+    self.inBackground = false;
+    document.addEventListener('pause', function () { self.inBackground = true });
+    document.addEventListener('resume', function () { self.inBackground = false });
 
     self.pagina = ko.observable('loader');
     self.loader = ko.observable(true);
@@ -61,7 +62,7 @@
         StatusBar.backgroundColorByHexString("#378613");
         var GooglePlus = window.plugins.googleplus;
         var appp = plugins.appPreferences;
-        app.initialize();
+        //app.initialize();
         appp.fetch(function (value) {
             checarCampos(value);
         }, function (err) {
@@ -386,7 +387,7 @@
     /********************************************************************************************************/
 
 
-    app.initialize = function () {
+    /*app.initialize = function () {
         document.addEventListener(
                 'deviceready',
                 function () { evothings.scriptsLoaded(onDeviceReady) },
@@ -395,8 +396,8 @@
 
     function onDeviceReady() {
         window.locationManager = cordova.plugins.locationManager;
-        //startScan();
-        //updateTimer = setInterval(displayBeaconList, 500);
+        startScan();
+        updateTimer = setInterval(displayBeaconList, 500);
         // Handle the Cordova pause and resume events
         if (window.MobileAccessibility) {
             window.MobileAccessibility.usePreferredTextZoom(false);
@@ -406,15 +407,15 @@
 
     function onPause() {
         // TODO: This application has been suspended. Save application state here.
-        //app.initialize();
+        app.initialize();
     };
 
     function onResume() {
-        //app.initialize();
+        app.initialize();
         // TODO: This application has been reactivated. Restore application state here.
     };
 
-    /*function startScan() {
+    function startScan() {
         // The delegate object holds the iBeacon callback functions
         // specified below.
         var delegate = new locationManager.Delegate();
@@ -440,7 +441,8 @@
         // If we are in the background, a notification is shown.
         delegate.didDetermineStateForRegion = function (pluginResult) {
             console.log(pluginResult.state);
-            if (inBackground) {
+            if (true) {
+                console.log('entro');
                 // Show notification if a beacon is inside the region.
                 // TODO: Add check for specific beacon(s) in your app.
                 if (pluginResult.region.typeName == 'BeaconRegion' &&
@@ -459,7 +461,6 @@
                 else {
                     cordova.plugins.notification.local.clearAll({});
                     console.log("Nao achou ");
-
                 }
 
                 cordova.plugins.notification.local.on("click", function (notification, state) {
@@ -497,9 +498,9 @@
                 .fail(console.error)
                 .done();
         }
-    }*/
+    }
 
-    /*function displayBeaconList() {
+    function displayBeaconList() {
         var timeNow = Date.now();
 
         // Update beacon list.
@@ -515,9 +516,9 @@
                 else if (beacon.rssi < 0) { rssiWidth = 100 + beacon.rssi; }
             }
         });
-    }*/
+    }
 
-    /*function calcularDistancia(rssi, txPower) {
+    function calcularDistancia(rssi, txPower) {
         var ratio = (rssi * 1 / txPower);
         if (ratio < 1.0) {
             var resultado = Math.pow(ratio, 10);
