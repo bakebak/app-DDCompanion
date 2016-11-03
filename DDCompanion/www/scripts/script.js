@@ -62,7 +62,7 @@
         StatusBar.backgroundColorByHexString("#378613");
         var GooglePlus = window.plugins.googleplus;
         var appp = plugins.appPreferences;
-        //app.initialize();
+        app.initialize();
         appp.fetch(function (value) {
             checarCampos(value);
         }, function (err) {
@@ -386,7 +386,102 @@
 
     /********************************************************************************************************/
 
+    //eddystone
+    app.initialize = function () {
+        document.addEventListener(
+            'deviceready',
+            function () { evothings.scriptsLoaded(onDeviceReady) },
+            false);
+    };
 
+    function onDeviceReady() {
+        window.locationManager = cordova.plugins.locationManager;
+        startScan();
+        updateTimer = setInterval(displayBeaconList, 500);
+        // Handle the Cordova pause and resume events
+        if (window.MobileAccessibility) {
+            window.MobileAccessibility.usePreferredTextZoom(false);
+        }
+        // TODO: Cordova has been loaded. Perform any initialization that requires Cordova here.
+    };
+
+    function onPause() {
+        // TODO: This application has been suspended. Save application state here.
+        app.initialize();
+    };
+
+    function onResume() {
+        app.initialize();
+        // TODO: This application has been reactivated. Restore application state here.
+    };
+
+    function startScan() {
+        // Called continuously when ranging beacons.
+        evothings.eddystone.startScan(
+			function (beacon) {
+			    // Insert/update beacon table entry.
+			    beacon.timeStamp = Date.now();
+			    beacons[beacon.address] = beacon;
+			},
+			function (error) {
+			    console.log('Eddystone Scan error: ' + JSON.stringify(error));
+			});
+    }
+
+    /**
+	 * Map the RSSI value to a value between 1 and 100.
+	 */
+    function mapBeaconRSSI(rssi) {
+        if (rssi >= 0) return 1; // Unknown RSSI maps to 1.
+        if (rssi < -100) return 0; // Max RSSI
+        return 100 + rssi;
+    }
+
+    function getSortedBeaconList(beacons) {
+        var beaconList = [];
+        for (var key in beacons) {
+            beaconList.push(beacons[key]);
+        }
+        beaconList.sort(function (beacon1, beacon2) {
+            return mapBeaconRSSI(beacon1.rssi) < mapBeaconRSSI(beacon2.rssi);
+        });
+        return beaconList;
+    }
+
+    function displayBeaconList() {
+        // Update beacon display list.
+        var timeNow = Date.now();
+        $.each(getSortedBeaconList(beacons), function (index, beacon) {
+            // Only show beacons that are updated during the last 60 seconds.
+            if (beacon.timeStamp + 60000 > timeNow) {
+                if (beacon.nid == '00010203040506070809' && beacon.bid == '000000000100') {
+                    if (logado == true) {
+                        cordova.plugins.notification.local.schedule(
+                            {
+                                id: notificationID,
+                                title: 'Você está perto da porta',
+                                text: 'Clique aqui para abrir a porta.'
+                            });
+                    }
+                }
+                else {
+                    cordova.plugins.notification.local.clearAll({});
+                    console.log("Nao achou ");
+                }
+                cordova.plugins.notification.local.on("click", function (notification, state) {
+                    console.log("Apertou " + limite);
+                    if (limite == 0) {
+                        self.pagina('loader');
+                        chamarConfirm(mensagem.abrirPorta);
+                        limite = 1;
+                    }
+                }, this)
+            }
+        });
+    }
+
+
+    //iBeacon
     /*app.initialize = function () {
         document.addEventListener(
                 'deviceready',
