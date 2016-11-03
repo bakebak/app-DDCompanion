@@ -396,7 +396,7 @@
 
     function onDeviceReady() {
         window.locationManager = cordova.plugins.locationManager;
-        startScan();
+        //startScan();
         updateTimer = setInterval(displayBeaconList, 500);
         // Handle the Cordova pause and resume events
         if (window.MobileAccessibility) {
@@ -428,9 +428,8 @@
 			});
     }
 
-    /**
-	 * Map the RSSI value to a value between 1 and 100.
-	 */
+    //Map the RSSI value to a value between 1 and 100.
+	 
     function mapBeaconRSSI(rssi) {
         if (rssi >= 0) return 1; // Unknown RSSI maps to 1.
         if (rssi < -100) return 0; // Max RSSI
@@ -491,11 +490,11 @@
 
     function onDeviceReady() {
         window.locationManager = cordova.plugins.locationManager;
-        startScan();
-        updateTimer = setInterval(displayBeaconList, 500);
+        //startScan();
+        //updateTimer = setInterval(displayBeaconList, 500);
         // Handle the Cordova pause and resume events
         if (window.MobileAccessibility) {
-            window.MobileAccessibility.usePreferredTextZoom(false);
+           window.MobileAccessibility.usePreferredTextZoom(false);
         }
         // TODO: Cordova has been loaded. Perform any initialization that requires Cordova here.
     };
