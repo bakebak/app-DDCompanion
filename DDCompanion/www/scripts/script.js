@@ -121,7 +121,6 @@
                     self.teste(true);
                 }
                 paginaValue = self.pagina();
-                console.log(result.accessToken);
                 self.loader(true);
                 self.pagina('loader');
                 validarUsuario(url, result, paginaValue);
@@ -396,7 +395,7 @@
 
     function onDeviceReady() {
         window.locationManager = cordova.plugins.locationManager;
-        //startScan();
+        startScan();
         updateTimer = setInterval(displayBeaconList, 500);
         // Handle the Cordova pause and resume events
         if (window.MobileAccessibility) {
@@ -417,8 +416,10 @@
 
     function startScan() {
         // Called continuously when ranging beacons.
+        console.log('startScan');
         evothings.eddystone.startScan(
 			function (beacon) {
+			    console.log(beacon);
 			    // Insert/update beacon table entry.
 			    beacon.timeStamp = Date.now();
 			    beacons[beacon.address] = beacon;
@@ -451,9 +452,11 @@
         // Update beacon display list.
         var timeNow = Date.now();
         $.each(getSortedBeaconList(beacons), function (index, beacon) {
+            console.log(beacon);
             // Only show beacons that are updated during the last 60 seconds.
             if (beacon.timeStamp + 60000 > timeNow) {
                 if (beacon.nid == '00010203040506070809' && beacon.bid == '000000000100') {
+                    console.log('achou2');
                     if (logado == true) {
                         cordova.plugins.notification.local.schedule(
                             {
