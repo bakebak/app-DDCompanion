@@ -419,7 +419,6 @@
         console.log('startScan');
         evothings.eddystone.startScan(
 			function (beacon) {
-			    console.log(beacon);
 			    // Insert/update beacon table entry.
 			    beacon.timeStamp = Date.now();
 			    beacons[beacon.address] = beacon;
@@ -427,7 +426,7 @@
 			function (error) {
 			    console.log('Eddystone Scan error: ' + JSON.stringify(error));
 			});
-    }
+    } 
 
     //Map the RSSI value to a value between 1 and 100.
 	 
@@ -452,18 +451,18 @@
         // Update beacon display list.
         var timeNow = Date.now();
         $.each(getSortedBeaconList(beacons), function (index, beacon) {
-            console.log(beacon);
+            console.log(JSON.stringify(beacon));
             // Only show beacons that are updated during the last 60 seconds.
             if (beacon.timeStamp + 60000 > timeNow) {
-                if (beacon.nid == '00010203040506070809' && beacon.bid == '000000000100') {
-                    console.log('achou2');
+                //if (beacon.nid == '00010203040506070809' && beacon.bid == '000000000100') {
+                if (beacon.name == 'Raspberry Porta') {
+                    console.log('achou');
                     if (logado == true) {
-                        cordova.plugins.notification.local.schedule(
-                            {
-                                id: notificationID,
-                                title: 'Você está perto da porta',
-                                text: 'Clique aqui para abrir a porta.'
-                            });
+                        cordova.plugins.notification.local.schedule({
+                            id: notificationID,
+                            title: 'Você está perto da porta',
+                            text: 'Clique aqui para abrir a porta.'
+                        });
                     }
                 }
                 else {
