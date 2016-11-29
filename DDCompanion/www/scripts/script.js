@@ -4,15 +4,15 @@
     var self = this;
 
     var app = {};
-    var beacons = {};
+    /*var beacons = {};
     var updateTimer = null;
-    /*var regions = [{ uuid: 'E2C56DB5-DFFB-48D2-B060-D0F5A71096E0' },
-                   { uuid: 'B9407F30-F5F8-466E-AFF9-25556B57FE6D' }, ];*/
+    var regions = [{ uuid: 'E2C56DB5-DFFB-48D2-B060-D0F5A71096E0' },
+                   { uuid: 'B9407F30-F5F8-466E-AFF9-25556B57FE6D' }, ];
     // Background detection.
     var notificationID = 1;
     self.inBackground = false;
     document.addEventListener('pause', function () { self.inBackground = true });
-    document.addEventListener('resume', function () { self.inBackground = false });
+    document.addEventListener('resume', function () { self.inBackground = false });*/
 
     self.pagina = ko.observable('loader');
     self.loader = ko.observable(true);
@@ -62,7 +62,10 @@
         StatusBar.backgroundColorByHexString("#378613");
         var GooglePlus = window.plugins.googleplus;
         var appp = plugins.appPreferences;
-        app.initialize();
+        //app.initialize();
+        if (window.MobileAccessibility) {
+            window.MobileAccessibility.usePreferredTextZoom(false);
+        }
         appp.fetch(function (value) {
             checarCampos(value);
         }, function (err) {
@@ -386,7 +389,7 @@
     /********************************************************************************************************/
 
     //eddystone
-    app.initialize = function () {
+    /*app.initialize = function () {
         document.addEventListener(
             'deviceready',
             function () { evothings.scriptsLoaded(onDeviceReady) },
@@ -398,10 +401,7 @@
         startScan();
         updateTimer = setInterval(displayBeaconList, 500);
         // Handle the Cordova pause and resume events
-        if (window.MobileAccessibility) {
-            window.MobileAccessibility.usePreferredTextZoom(false);
-        }
-        // TODO: Cordova has been loaded. Perform any initialization that requires Cordova here.
+        
     };
 
     function onPause() {
@@ -479,7 +479,7 @@
                 }, this)
             }
         });
-    }
+    }*/
 
 
     //iBeacon
