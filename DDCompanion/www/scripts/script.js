@@ -372,7 +372,7 @@
          );
     }
 
-    function chamarConfirm(mensagemConfirm) {
+    /*function chamarConfirm(mensagemConfirm) {
         navigator.notification.confirm(
             mensagemConfirm, // message
             onConfirm,            // callback to invoke with index of button pressed
@@ -384,7 +384,7 @@
     function onConfirm() {
         self.abrirPorta();
         self.pagina('home');
-    }
+    }*/
 
     /********************************************************************************************************/
 

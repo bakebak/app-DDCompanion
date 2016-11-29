@@ -121,6 +121,5 @@
   <preference name="SuppressesIncrementalRendering" value="False" />
   <plugin name="cordova-plugin-app-preferences" version="0.99.2" />
   <plugin name="de.appplant.cordova.plugin.local-notification" version="0.8.4" />
-  <plugin name="com.unarin.cordova.beacon" version="3.4.0" />
   <plugin name="cordova-plugin-ble" version="2.0.1" />
 </widget>
