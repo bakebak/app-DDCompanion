@@ -23,14 +23,6 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-ble": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-ble"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "cordova-plugin-googleplus": {
         "source": {
             "type": "git",
